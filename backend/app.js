@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const postRoutes = require('./routes/posts');
+const userRoutes = require('./routes/user');
 
 const app = express();
 
@@ -24,8 +25,8 @@ mongoose.connect("mongodb+srv://julien:7KyvgNH20VoZqf2G@cluster0-psxly.mongodb.n
       console.log(error);  
   });
 
-
+app.use('/api/auth', userRoutes);
 app.use('/api/posts', postRoutes);
-  
 
-  module.exports = app;
+
+module.exports = app;

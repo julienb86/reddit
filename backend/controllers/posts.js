@@ -1,11 +1,19 @@
 const Post = require('../models/posts');
 
+
+
+/* exports.postArticle = (req, res, next) => {
+    
+} */
+
+
+
+
+
 exports.getAllPosts = (req, res, next) => {
     Post.find().then(
         (posts) => {
-            res.status(200).json(posts);
-            console.log(posts);
-            
+            res.status(200).json(posts);            
         }
     ).catch(
         (error) => {
@@ -15,3 +23,4 @@ exports.getAllPosts = (req, res, next) => {
         }
     );
 }
+
