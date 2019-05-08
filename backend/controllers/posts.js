@@ -2,13 +2,6 @@ const Post = require('../models/posts');
 
 
 
-/* exports.postArticle = (req, res, next) => {
-    
-} */
-
-
-
-
 
 exports.getAllPosts = (req, res, next) => {
     Post.find().then(
