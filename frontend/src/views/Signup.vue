@@ -2,15 +2,21 @@
     <div class="row">
         <div class="card col-md-6 offset-md-3 my-5">  
             <div class="card-body">
-                <h3 class="text-center my-3">Login</h3>
+                <h3 class="text-center my-3">Signup</h3>
                 <div class="form-group ">
+                    <input type="text" placeholder="Last Name" class="form-control">
+                </div>
+                <div class="form-group ">
+                    <input type="text" placeholder="First Name" class="form-control">
+                </div>
+                <div class="form-group">
                     <input type="text" placeholder="Email" class="form-control">
                 </div>
                 <div class="form-group ">
                     <input type="password" placeholder="Password" class="form-control">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-success form-control">Login</button>                    
+                    <button class="btn btn-success form-control">Signup</button>                    
                 </div>
             </div>
         </div>

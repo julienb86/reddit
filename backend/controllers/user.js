@@ -7,6 +7,8 @@ exports.signup = (req, res, next) => {
         .then(
             (hash) => {
                 const user = new User({
+                    lastName : req.body.lastName,
+                    firstName : req.body.firstName,
                     email : req.body.email,
                     password : hash
                 });
