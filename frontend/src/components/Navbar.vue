@@ -9,17 +9,35 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-      <router-link class="nav-link" to="/login">Login</router-link>
-      <router-link class="nav-link" to="/signup">Signup</router-link>
-      <li class="nav-item dropdown">
- <!--        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Groupomania
+      <li class="nav-item" v-if="!isAuth"> 
+        <router-link class="nav-link" to="/login" >Login</router-link>
+      </li>
+      <li class="nav-item" v-if="!isAuth">
+        <router-link class="nav-link" to="/signup">Signup</router-link>
+      </li>
+      <li class="nav-item dropdown" v-if="isAuth">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Hey {{isAuth.firstName}}
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
           <a class="dropdown-item" href="#">Logout</a>
-        </div> -->
+        </div>
       </li>
     </ul>
   </div>
 </nav>
 </template>
+
+
+<script>
+export default {
+  mounted() {
+    console.log(this.$root);   
+  },
+    computed : {
+      isAuth(){
+        return this.$root.auth.user;
+      }
+    }
+}
+</script>

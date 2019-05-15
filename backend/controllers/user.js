@@ -6,16 +6,19 @@ exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(
             (hash) => {
+                const date = new Date();
                 const user = new User({
                     lastName : req.body.lastName,
                     firstName : req.body.firstName,
                     email : req.body.email,
-                    password : hash
+                    password : hash,
+                    created : date,
                 });
             user.save().then(
                 () => {
                     res.status(201).json({
-                        message: "User successfully added!"
+                        message: "User successfully added!",
+                        user : user
                     });
                 }
             ).catch(
