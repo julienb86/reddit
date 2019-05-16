@@ -33,13 +33,16 @@ export default {
     methods : {
         async loginUser(){
         try{
-            const response = await  Axios.post("http://localhost:3000/api/auth/login", {
+            const response = await Axios.post("http://localhost:3000/api/auth/login", {
                 email : this.email,
                 password : this.password
                 });
+             console.log(response);
             const data = await response.data.user;
+
+            
                 localStorage.setItem('auth', JSON.stringify(data));
-                this.$routes.push('/');  
+                this.$router.push('/');  
         }catch(error){
             console.log(error);
                 }    

@@ -8,8 +8,7 @@ exports.signup = (req, res, next) => {
             (hash) => {
                 const date = new Date();
                 const user = new User({
-                    lastName : req.body.lastName,
-                    firstName : req.body.firstName,
+                    name : req.body.name,
                     email : req.body.email,
                     password : hash,
                     created : date,
@@ -51,8 +50,8 @@ exports.login = (req, res, next) => {
                         {userId : user._id},
                         "RANDOM_TOKEN",
                         {expiresIn: '24h'})
-                    res.status(201).json({
-                        userId : user_id,
+                    res.status(200).json({
+                        userId : user._id,
                         token : token
                     });
                 }

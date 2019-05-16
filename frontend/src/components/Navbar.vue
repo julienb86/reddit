@@ -17,7 +17,7 @@
       </li>
       <li class="nav-item dropdown" v-if="isAuth">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Hey {{isAuth.firstName}}
+          Hey {{isAuth.name}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
           <a class="dropdown-item" href="#">Logout</a>
@@ -31,9 +31,6 @@
 
 <script>
 export default {
-  mounted() {
-    console.log(this.$root);   
-  },
     computed : {
       isAuth(){
         return this.$root.auth.user;
