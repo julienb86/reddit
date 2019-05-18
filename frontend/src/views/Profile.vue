@@ -1,7 +1,7 @@
 <template>
     <div class="row my-5">
         <div class="card col-md-6 offset-md-3">  
-            <form class="form card-body" @submit.prevent="registerUser()">
+            <form class="form card-body" @submit.prevent="registerProfile()">
                 <h3 class="text-center my-3">Profile</h3>
                 <div class="form-group">
                     <select class="custom-select" v-model="department">
@@ -24,6 +24,7 @@
 <script>
 
 import Datepicker from 'vuejs-datepicker';
+import Axios from 'axios';
 
 export default {
     components: {
@@ -32,10 +33,31 @@ export default {
     data(){
         return{
             department: '',
-            birthday: '',
             state : {
                 date: ''
-            }
+            },
+
+        }
+    },
+    methods : {
+        async registerProfile(){
+
+                
+                try {
+
+                    const response = await Axios.post("http://localhost:3000/api/profile", {
+                        department : this.department,
+                        birthday : this.state.date
+                    });
+                    console.log(response);
+
+                    }
+                    catch (error){
+                    console.log(error);  
+                       
+                }  
+
+            
         }
     }
 }
