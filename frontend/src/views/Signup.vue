@@ -4,11 +4,11 @@
             <form class="form card-body" @submit.prevent="registerUser()">
                 <h3 class="text-center my-3">Signup</h3>
                 <div class="form-group">
-                    <input v-validate="'required|email'" name="email" v-model="email" type="text" placeholder="Email" class="form-control">
+                    <input v-validate="'required|email'" name="email" v-model="email" type="text" placeholder="Email" class="form-control" autofocus>
                     <small class="text-danger" > {{ errors.first('email')}}</small>
                 </div>
                 <div class="form-group" >
-                    <input name="name" v-validate="'required'" v-model="name" type="text" placeholder="Name" class="form-control" autofocus>
+                    <input name="name" v-validate="'required'" v-model="name" type="text" placeholder="Name" class="form-control" >
                     <small v-if="!name" v-show="errors.has('name')" class="text-danger"> {{ errors.first('name') }}</small>
                 </div>
                 <div class="form-group">

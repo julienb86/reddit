@@ -1,6 +1,6 @@
 <template>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="/">
     <img src="../assets/icon.png" alt="logo" width="75" height="75">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,8 @@
           Hey {{ isAuth.name }}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
-          <a class="dropdown-item" href="#">Logout</a>
+          <a class="dropdown-item" @click="logout()" >Logout</a>
+          <router-link class="dropdown-item" to="/profile">Profile</router-link>
         </div>
       </li>
     </ul>
@@ -34,6 +35,13 @@ export default {
     computed : {
       isAuth(){
         return this.$root.auth.user;
+      }
+    },
+    methods : {
+      logout(){
+        localStorage.removeItem("auth");
+        this.$root.auth = {};
+        this.$router.push('/signup');
       }
     }
 }

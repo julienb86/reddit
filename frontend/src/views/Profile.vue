@@ -17,6 +17,9 @@
                     <button class="btn btn-success form-control">Confirm</button>                    
                 </div>
             </form>
+            <div class="form-group text-center">
+                <button class="btn btn-danger">Delete Account</button>                    
+            </div>
         </div>
     </div>
 </template>
@@ -36,28 +39,26 @@ export default {
             state : {
                 date: ''
             },
-
         }
+            
     },
     methods : {
         async registerProfile(){
-
+            try {
+                const response = await Axios.post("http://localhost:3000/api/profile", {
+                    department : this.department,
+                    birthday : this.state.date
+                });
                 
-                try {
+                console.log(response);
+                const data = await response.data;
+                this.$router.push('/');
+                console.log(data);
 
-                    const response = await Axios.post("http://localhost:3000/api/profile", {
-                        department : this.department,
-                        birthday : this.state.date
-                    });
-                    console.log(response);
-
-                    }
-                    catch (error){
-                    console.log(error);  
-                       
-                }  
-
-            
+                }
+                catch (error){
+                console.log(error);                 
+            }   
         }
     }
 }
