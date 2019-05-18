@@ -6,12 +6,11 @@ exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(
             (hash) => {
-                const date = new Date();
                 const user = new User({
                     name : req.body.name,
                     email : req.body.email,
+                    department : req.body.department,
                     password : hash,
-                    created : date,
                 });
             user.save().then(
                 () => {
@@ -52,7 +51,7 @@ exports.login = (req, res, next) => {
                         {expiresIn: '24h'})
                     res.status(200).json({
                         userId : user._id,
-                        token : token
+                        token : token,
                     });
                 }
             ).catch(

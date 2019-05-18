@@ -37,14 +37,16 @@ export default {
                 email : this.email,
                 password : this.password
                 });
-             console.log(response);
-            const data = await response.data.user;
-
-            
+                
+                const data = await response.data;
+                console.log(response.data);
+                
                 localStorage.setItem('auth', JSON.stringify(data));
+                this.$root.auth = data;
                 this.$router.push('/');  
-        }catch(error){
+        }catch (error){
             console.log(error);
+            
                 }    
             }
         }
