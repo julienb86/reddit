@@ -64,7 +64,7 @@ export default {
                     const data = await response.data;
                     localStorage.setItem('auth', JSON.stringify(data));
                     this.$root.auth = data;
-                    this.$router.push('/');
+                    this.$router.push('/home');
                     }
                     catch (error){
                     console.log(error);  

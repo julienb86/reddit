@@ -12,11 +12,11 @@ const router = new Router({
         component: Signup
     },
     {
-        path : '/login',
+        path : '/',
         component : Login
     },
     {
-        path : '/',
+        path : '/home',
         component : Home
     }    
 ]

@@ -1,3 +1,3 @@
 <template>
-    <h1>Bienvenue sur la page d'accueil</h1>
+    <h1 class="text-center my-5">Welcome to the Home Page</h1>
 </template>
