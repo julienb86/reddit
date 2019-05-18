@@ -43,7 +43,7 @@ export default {
                 
                 localStorage.setItem('auth', JSON.stringify(data));
                 this.$root.auth = data;
-                this.$router.push('/home');  
+                this.$router.push('/');  
         }catch (error){
             console.log(error);
             
