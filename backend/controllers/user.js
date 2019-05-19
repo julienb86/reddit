@@ -10,7 +10,7 @@ exports.signup = (req, res, next) => {
                     name : req.body.name,
                     email : req.body.email,
                     department : req.body.department,
-                    password : hash,
+                    password : hash
                 });
             user.save().then(
                 () => {
@@ -71,4 +71,9 @@ exports.login = (req, res, next) => {
             });
         }
     );
+}
+
+
+exports.modyProfile = (req, res, next) => {
+
 }
