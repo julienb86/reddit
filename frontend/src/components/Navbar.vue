@@ -21,7 +21,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
           <a class="dropdown-item" @click="logout()" >Logout</a>
-          <router-link class="dropdown-item" to="/profile">Profile</router-link>
+          <router-link class="dropdown-item" :to="`/profile/${isAuth._id}`">Profile</router-link>
         </div>
       </li>
     </ul>

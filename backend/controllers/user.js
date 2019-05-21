@@ -2,6 +2,21 @@ const User = require("../models/user");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
+exports.getOneUser = (req, res, next) => {
+    User.findOne({_id : req.params.id}).then(
+        (user) => {
+            res.status(200).json(user);
+        }
+    ).catch(
+        (error) => {
+            res.status(500).json({
+                error : error
+            });
+        }
+    );
+}
+
+
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(
@@ -74,6 +89,18 @@ exports.login = (req, res, next) => {
 }
 
 
-exports.modyProfile = (req, res, next) => {
-
+exports.deleteAccount = (req, res, next)=>{
+    User.deleteOne({_id : req.params.id}).then(
+        () => {
+            res.status(200).json({
+                message : "User account deleted successfully!"
+            });
+        }
+    ).catch(
+        (error) => {
+            res.status(400).json({
+                error : error
+            });
+        }
+    );
 }

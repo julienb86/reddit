@@ -22,9 +22,9 @@ const router = new Router({
         component : Home
     },
     {
-        path : '/profile',
+        path : '/profile/:id',
         component : Profile
-    }       
+    },  
 ]
 })
 

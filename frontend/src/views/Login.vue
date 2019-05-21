@@ -4,7 +4,7 @@
             <div class="card-body">
                 <h3 class="text-center my-3">Login</h3>
                 <div class="form-group ">
-                    <input v-model="email" type="text" placeholder="Email" class="form-control">
+                    <input v-model="email" type="email" placeholder="Email" class="form-control">
                 </div>
                 <div class="form-group ">
                     <input v-model="password" type="password" placeholder="Password" class="form-control">

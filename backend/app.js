@@ -29,6 +29,7 @@ mongoose.connect("mongodb+srv://julien:7KyvgNH20VoZqf2G@cluster0-psxly.mongodb.n
 
 app.use('/api/auth', userRoutes);
 app.use('/api/posts', postRoutes);
-app.use('/api', profileRoutes);
+/* app.use('/api', profileRoutes); */
+
 
 module.exports = app;

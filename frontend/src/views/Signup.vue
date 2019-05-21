@@ -14,13 +14,14 @@
                 <div class="form-group"  >
                     <select :class="{'custom-select is-invalid': !department, 'custom-select is-valid': department}" name="department" v-validate="'required'" v-model="department">
                         <option value="">Select your department</option>
-                        <option value="marketing">Marketing</option>
+                        <option value="Marketing">Marketing</option>
                         <option value="HR">HR</option>
                         <option value="Development">Development</option>
                         <option value="UX/UI">UX/UI</option>
                     </select>
                     <small v-show="errors.has('department')" class="text-danger"> {{ errors.first('department') }}</small>
                 </div>
+                <datepicker class="form-group" placeholder="Date of birthday" :bootstrap-styling="true" :value="date" v-model="date" name="calendar"></datepicker>
                 <div class="form-group"  >
                     <input name="password" v-validate="'required|min:6'" v-model="password" type="password" placeholder="Password" :class="{'form-control is-invalid': !password, 'form-control is-valid': password}">
                     <small v-show="errors.has('password')" class="text-danger"> {{ errors.first('password') }}</small>
@@ -37,13 +38,18 @@
 <script>
 
 import Axios from 'axios';
+import Datepicker from 'vuejs-datepicker';
 
 export default {
+      components: {
+        Datepicker
+    },
     data(){
         return {
             name: '',
             email : '',
             department : '',
+            date: '',
             password: '',
             submitted : false
         }
@@ -56,6 +62,7 @@ export default {
                         name : this.name,
                         email : this.email,
                         department : this.department,
+                        date: this.date,
                         password : this.password
                     });
                     console.log(response);
