@@ -21,7 +21,7 @@
                     </select>
                     <small v-show="errors.has('department')" class="text-danger"> {{ errors.first('department') }}</small>
                 </div>
-                <datepicker class="form-group" placeholder="Date of birthday" :bootstrap-styling="true" :value="date" v-model="date" name="calendar"></datepicker>
+                <datepicker class="form-group" placeholder="Date of birthday" :bootstrap-styling="true" :value="birthday" v-model="birthday" name="calendar"></datepicker>
                 <div class="form-group"  >
                     <input name="password" v-validate="'required|min:6'" v-model="password" type="password" placeholder="Password" :class="{'form-control is-invalid': !password, 'form-control is-valid': password}">
                     <small v-show="errors.has('password')" class="text-danger"> {{ errors.first('password') }}</small>
@@ -49,7 +49,7 @@ export default {
             name: '',
             email : '',
             department : '',
-            date: '',
+            birthday: '',
             password: '',
             submitted : false
         }
@@ -62,15 +62,18 @@ export default {
                         name : this.name,
                         email : this.email,
                         department : this.department,
-                        date: this.date,
+                        birthday: this.birthday,
                         password : this.password
                     });
                     console.log(response);
                     
                     const data = await response.data;
+                    console.log(data.user._id);
+                    
                     localStorage.setItem('auth', JSON.stringify(data));
                     this.$root.auth = data;
-                    this.$router.push('/profile');
+                    /* this.$router.push("/profile"); */
+                    this.$router.push(`/profile/${data.user._id}`) ;
                     }
                     catch (error){
                     console.log(error);  

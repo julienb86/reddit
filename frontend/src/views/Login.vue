@@ -10,7 +10,7 @@
                     <input v-model="password" type="password" placeholder="Password" class="form-control">
                 </div>
                 <div class="form-group">
-                    <button @click="loginUser()" class="btn btn-success form-control">Login</button>                    
+                    <button @click="loginUser()" :disabled="!isComplete" class="btn btn-success form-control">Login</button>                    
                 </div>
             </div>
         </div>
@@ -28,6 +28,11 @@ export default {
         return {
             email : '',
             password : ''
+        }
+    },
+    computed : {
+        isComplete(){
+            return this.email && this.password;
         }
     },
     methods : {
