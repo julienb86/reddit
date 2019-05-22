@@ -24,6 +24,9 @@
           <router-link class="dropdown-item" :to="`/profile/${isAuth._id}`">Profile</router-link>
         </div>
       </li>
+      <li class="nav-item" v-if="isAuth">
+        <router-link class="nav-link" to="/publish">Publish</router-link>
+      </li>
     </ul>
   </div>
 </nav>
@@ -41,7 +44,7 @@ export default {
       logout(){
         localStorage.removeItem("auth");
         this.$root.auth = {};
-        this.$router.push('/signup');
+        this.$router.push('/login');
       }
     }
 }

@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const auth = require('../middleware/auth');
-const profileCtrl = require('../controllers/profile');
+const articlesCtrl = require('../controllers/articles');
 
 
 
 /* add auth below */
-router.post('/profile', profileCtrl.confirmProfile);
+router.get('/', articlesCtrl.getAllArticles);
+router.post('/', articlesCtrl.createArticles);
 
 
 module.exports = router;

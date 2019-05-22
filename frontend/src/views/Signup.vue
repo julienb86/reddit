@@ -56,32 +56,29 @@ export default {
     },
     methods : {
         async registerUser(){
-                try {
+            try {
 
-                    const response = await Axios.post("http://localhost:3000/api/auth/signup", {
-                        name : this.name,
-                        email : this.email,
-                        department : this.department,
-                        birthday: this.birthday,
-                        password : this.password
-                    });
-                    console.log(response);
+                const response = await Axios.post("http://localhost:3000/api/auth/signup", {
+                    name : this.name,
+                    email : this.email,
+                    department : this.department,
+                    birthday: this.birthday,
+                    password : this.password
+                });
+                console.log(response);
+                
+                const data = await response.data;
+                console.log(data.user._id);
+                
+                localStorage.setItem('auth', JSON.stringify(data));
+                this.$root.auth = data;
+                this.$router.push(`/profile/${data.user._id}`) ;
+                }
+                catch (error){
+                console.log(error);  
+                console.log("the field need to be filled");
                     
-                    const data = await response.data;
-                    console.log(data.user._id);
-                    
-                    localStorage.setItem('auth', JSON.stringify(data));
-                    this.$root.auth = data;
-                    /* this.$router.push("/profile"); */
-                    this.$router.push(`/profile/${data.user._id}`) ;
-                    }
-                    catch (error){
-                    console.log(error);  
-                    console.log("the field need to be filled");
-                       
-                }  
-
-            
+            }  
         }
     },
     computed: {
