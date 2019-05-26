@@ -9,8 +9,8 @@
             <!-- links from Navbar -->
             <!-- links from Departments -->
         </router-view>
-
     </div>
+
 </template>
 
 

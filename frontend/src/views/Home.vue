@@ -38,11 +38,7 @@
 
                 <Register/>
 
-
                 <Login/>
-
-
-
 
         </div>
     </div>

@@ -1,4 +1,6 @@
 <template>
+<div class="row">
+
     <div class="row my-5">
         <div class="card col-md-6 offset-md-3">  
             <form class="form card-body" @submit.prevent="registerProfile()">
@@ -14,15 +16,18 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
 /* beforeRoutesEnter to oblige the user to fill this form before redirecting */
 import Axios from 'axios';
 import Datepicker from 'vuejs-datepicker';
+
 export default {
       components: {
-        Datepicker
+        Datepicker,
+
     },
     data(){
         return{

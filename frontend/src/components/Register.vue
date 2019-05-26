@@ -31,7 +31,7 @@
                 <small v-show="errors.has('password')" class="text-danger"> {{ errors.first('password') }}</small>
             </div>
             <div class="form-group text-center">
-                <b-button :disabled="!isComplete" class="btn form-control" @click="registerUser()">Signup</b-button>                    
+                <b-button :disabled="!isComplete" class="btn form-control" @click="registerUser()">Register</b-button>                    
             </div>
         </form>
     </b-modal>
@@ -76,7 +76,7 @@ export default {
                 
                 localStorage.setItem('auth', JSON.stringify(data));
                 this.$root.auth = data;
-                this.$router.push("/homepage/profile");
+                this.$router.push("/homepage");
                 }
                 catch (error){
                 console.log(error);  
