@@ -22,23 +22,17 @@
           </div>
         </div>
         <div class="col-md-6 my-auto">
-            <div class="">
-              <img src="../assets/main-screen-icon.png" alt="groupomania-icon" height="100px" width="100px">
+            <div class="col-12 groupomania-icon">
+              <img class="mx-auto d-block" src="../assets/main-screen-icon.png" alt="groupomania-icon" height="100px" width="100px">
             </div>
-              <form class="col-md-8 offset-md-2 d-flex flex-column">
-<!--                 <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#register">
-                    Register
-                </button>
-                <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#login">
-                    Login
-                </button> -->
-                <b-button id="register" class="btn btn-lg" @click="$bvModal.show('register')">Register</b-button>
-                <b-button id="login" class="btn btn-lg" @click="$bvModal.show('login')">Login</b-button>
-              </form>  
+            <form class="col-md-8 offset-md-2 d-flex flex-column">
+              <b-button id="register" class="btn btn-lg" @click="$bvModal.show('register')">Register</b-button>
+              <b-button id="login" class="btn btn-lg" @click="$bvModal.show('login')">Login</b-button>
+            </form>  
 
-                <Register/>
+            <Register/>
 
-                <Login/>
+            <Login/>
 
         </div>
     </div>
@@ -92,5 +86,9 @@ h3{
 
   .image{
       border: 1px solid;
+  }
+
+  .groupomania-icon{
+    margin-bottom: 50px;
   }
 </style>
