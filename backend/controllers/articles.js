@@ -17,9 +17,8 @@ exports.getAllArticles = (req, res, next) => {
 
 exports.createArticles = (req, res, next) => {
     const articles = new Articles({
-        userId : req.body.article.userId,
+/*         userId : req.body.userId, */
         department : req.body.department,
-        picture : req.body.picture,
         content : req.body.content,
         imageUrl : req.body.imageUrl,
         created : new Date()

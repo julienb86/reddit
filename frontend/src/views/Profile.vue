@@ -9,10 +9,6 @@
                 <p class="text-center">Email : <span>{{ user.email }}</span></p>
                 <p class="text-center" v-if="user.birthday">Birthday : <span >{{ user.birthday }}</span></p>
             </form>
-            <div class="form-group text-center" v-if="!birthday">
-                <datepicker class="form-group col-md-6 offset-md-3" placeholder="Date of birthday" :bootstrap-styling="true" :value="birthday" v-model="birthday" name="calendar"></datepicker>
-                <button class="btn btn-warning">Edit Birthday</button>                    
-            </div>
             <div class="form-group text-center">
                 <button @click="deleteAccount()" class="btn btn-danger">Delete Account</button>                    
             </div>
@@ -22,18 +18,15 @@
 
 <script>
 /* beforeRoutesEnter to oblige the user to fill this form before redirecting */
-
 import Axios from 'axios';
 import Datepicker from 'vuejs-datepicker';
-
 export default {
       components: {
         Datepicker
     },
-
     data(){
         return{
-            user : this.$root.auth.user,
+            user : this.$root.auth,
             birthday: ''
         }
             
@@ -48,9 +41,8 @@ export default {
                 const data = await response.data;
                 this.$root.auth = {};
                 localStorage.removeItem('auth');
-                this.$router.push('/signup');
+                this.$router.push('/');
                 console.log(data);
-
                 }
                 catch (error){
                 console.log(error);            
