@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-6 left">
+        <div class="col-md-6 left d-none d-sm-block">
           <div class="justify-content-center align-items-baseline d-flex flex-column content">
             <ul>
               <li>

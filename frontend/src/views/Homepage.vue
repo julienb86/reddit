@@ -23,7 +23,10 @@ export default {
     components:{
         Navbar,
         Departments
-    }
+    
+    },
+
+
     
 }
 </script>

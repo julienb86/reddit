@@ -4,8 +4,11 @@ import router from './router'
 import VeeValidate from 'vee-validate';
 import wysiwyg from "vue-wysiwyg";
 import "vue-wysiwyg/dist/vueWysiwyg.css";
-
+import {store} from './store/store';
 import BootstrapVue from 'bootstrap-vue'
+
+
+
 Vue.use(BootstrapVue)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -24,5 +27,6 @@ new Vue({
     auth : authData ? JSON.stringify(authData) : {}
   },
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

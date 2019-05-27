@@ -1,8 +1,6 @@
 <template>
 <div>
     <div>
-
-
     <!-- Modal Component -->
     <b-modal id="register" hide-footer>
         <form class="col-12">
@@ -12,16 +10,13 @@
                 <small class="text-danger" v-show="errors.has('email')"> {{ errors.first('email')}}</small>
             </div>
             <div class="form-group" >
-                <input name="name" v-validate="'required'" v-model="name" type="text" placeholder="Name" :class="{'form-control is-invalid': !name, 'form-control is-valid': name}">
+                <input name="name" v-validate="'required'" v-model="name" type="text" placeholder="Full Name" :class="{'form-control is-invalid': !name, 'form-control is-valid': name}">
                 <small v-show="errors.has('name')" class="text-danger"> {{ errors.first('name') }}</small>
             </div>
-            <div class="form-group"  >
-                <select :class="{'custom-select is-invalid': !department, 'custom-select is-valid': department}" name="department" v-validate="'required'" v-model="department">
-                    <option value="">Select your department</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="HR">HR</option>
-                    <option value="Development">Development</option>
-                    <option value="UX/UI">UX/UI</option>
+            <div class="form-group">
+                <select :class="{'custom-select is-invalid': !department, 'custom-select is-valid': department}" name="department" v-validate="'required'" v-model="department" >
+                    <option value="">Select your department</option>                   
+                    <option v-for="depart in getDepartments"  :key="depart.id" :value="depart">{{depart}}</option> 
                 </select>
                 <small v-show="errors.has('department')" class="text-danger"> {{ errors.first('department') }}</small>
             </div>
@@ -43,11 +38,16 @@
 <script>
 import Datepicker from 'vuejs-datepicker';
 import Axios from 'axios';
+import { mapGetters } from 'vuex';
+
+
 
 export default {
     components:{
         Datepicker
     },
+
+    
           data(){
         return {
             name: '',
@@ -70,10 +70,8 @@ export default {
                     password : this.password
                 });
                 console.log(response);
-                
-                const data = await response.data;
-                console.log(data.user._id);
-                
+                const data = await response.data; 
+          
                 localStorage.setItem('auth', JSON.stringify(data));
                 this.$root.auth = data;
                 this.$router.push("/homepage");
@@ -86,11 +84,18 @@ export default {
         },
     },
         computed: {
+            ...mapGetters([
+                'getDepartments'
+            ]),
+
         isComplete(){
             return this.email && this.department && this.password && this.name;
         }
     }
 }
+
+
+
 </script>
 
 
