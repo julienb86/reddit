@@ -2,7 +2,7 @@
 
         <div class="col-md-2 left">
             <ul class="col-md-6 offset-3" v-for="depart in getDepartments" :key="depart.id">
-                <li>{{ depart}}</li>
+                <li>{{ depart }}</li>
             </ul>
         </div>
 </template>
@@ -24,4 +24,5 @@ export default {
     background-color:#EAE8E6;
     height: 100vh;
 }
+
 </style>

@@ -46,42 +46,27 @@ export default {
     components:{
         Datepicker
     },
-
-    
-          data(){
-        return {
-            name: '',
-            email : '',
-            department : '',
-            birthday: '',
-            password: '',
-            submitted : false
-        }
-    },
+        data(){
+            return {
+                name: '',
+                email : '',
+                department : '',
+                birthday: '',
+                password: '',
+                submitted : false
+            }
+        },
     methods:{
-                async registerUser(){
-            try {
-
-                const response = await Axios.post("http://localhost:3000/api/auth/signup", {
+        registerUser(){
+            this.$store.dispatch('registerUser', {
                     name : this.name,
                     email : this.email,
                     department : this.department,
                     birthday: this.birthday,
                     password : this.password
-                });
-                console.log(response);
-                const data = await response.data; 
-          
-                localStorage.setItem('auth', JSON.stringify(data));
-                this.$root.auth = data;
-                this.$router.push("/homepage");
-                }
-                catch (error){
-                console.log(error);  
-                console.log("the field need to be filled");
-                    
-            }  
-        },
+            });
+            this.$router.push("/homepage");
+        }
     },
         computed: {
             ...mapGetters([

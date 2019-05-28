@@ -18,7 +18,7 @@ Vue.use(wysiwyg, {});
 Vue.use(BootstrapVue);
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 const authData = localStorage.getItem('auth');
 

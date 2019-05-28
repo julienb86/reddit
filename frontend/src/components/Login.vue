@@ -20,8 +20,6 @@
 
 
 <script>
-import Axios from 'axios';
-
 export default {
           data(){
         return {
@@ -31,24 +29,13 @@ export default {
         }
     },
         methods : {
-        async loginUser(){
-        try{
-            const response = await Axios.post("http://localhost:3000/api/auth/login", {
-                email : this.email,
-                password : this.password
-                });
-                
-                const data = await response.data;
-                console.log(response);
-                
-                localStorage.setItem('auth', JSON.stringify(data.user));
-                this.$root.auth = data;
- 
-        }catch (error){
-            console.log(error);
-            
-                }    
-            }
+            loginUser(){
+                this.$store.dispatch('loginUser', {
+                    email : this.email,
+                    password : this.password
+                    }); 
+                this.$router.push('/homepage');
+        }
     },
     computed: {
         isComplete(){
