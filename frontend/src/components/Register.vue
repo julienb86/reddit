@@ -3,7 +3,7 @@
     <div>
     <!-- Modal Component -->
     <b-modal id="register" hide-footer>
-        <form class="col-12">
+        <form class="col-12" @submit.prevent="registerUser()">
             <h3 class="text-center my-3">Register</h3>
             <div class="form-group">
                 <input v-validate="'required|email'" name="email" v-model="email" type="email" placeholder="Email" :class="{'form-control is-invalid': !email, 'form-control is-valid': email}" autofocus>
@@ -26,7 +26,7 @@
                 <small v-show="errors.has('password')" class="text-danger"> {{ errors.first('password') }}</small>
             </div>
             <div class="form-group text-center">
-                <b-button :disabled="!isComplete" class="btn form-control" @click="registerUser()">Register</b-button>                    
+                <b-button type='submit' :disabled="!isComplete" class="btn form-control" >Register</b-button>                    
             </div>
         </form>
     </b-modal>
@@ -39,6 +39,7 @@
 import Datepicker from 'vuejs-datepicker';
 import Axios from 'axios';
 import { mapGetters } from 'vuex';
+
 
 
 
@@ -57,16 +58,33 @@ export default {
             }
         },
     methods:{
-        registerUser(){
-            this.$store.dispatch('registerUser', {
+        async registerUser(){
+            await this.$store.dispatch('registerUser', {
+                name : this.name,
+                email : this.email,
+                department : this.department,
+                birthday: this.birthday,
+                password : this.password
+                });
+            this.$router.push('/homepage');            
+        }
+/*         async registerUser() {
+            try {
+                const response = await Axios.post("http://localhost:3000/api/auth/signup", {
                     name : this.name,
                     email : this.email,
                     department : this.department,
                     birthday: this.birthday,
                     password : this.password
-            });
-            this.$router.push("/homepage");
-        }
+                });
+                
+                const allDatas = await response.data;
+                console.log(allDatas);                
+                }
+                catch (error){
+                console.log(error);                     
+            }  
+        }, */
     },
         computed: {
             ...mapGetters([

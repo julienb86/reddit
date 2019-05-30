@@ -4,14 +4,12 @@ import Axios from 'axios';
 
 Vue.use(Vuex);
 
-export const store =  new Vuex.Store({
+export const store = new Vuex.Store({
+    strict: true,
     state: {
-        token : null,
-        name : '',
-        email : '',
-        department : '',
-        birthday: '',
-        isUserLoggedIn : false,
+        token : localStorage.getItem('token') || null,
+        user : JSON.parse(localStorage.getItem('user')) || '',
+/*         isUserLoggedIn : false, */
         departments : [
             "Marketing",
             "HR",
@@ -21,8 +19,17 @@ export const store =  new Vuex.Store({
     },
 
     getters:{
-        getName: state => {
-            return state.name;
+        getUser: state => {
+            return state.user.name;
+        },
+        getUserDepartment : state => {
+            return state.user.department;
+        },
+        getUserBirthday: state => {
+            return state.user.birthday;
+        },
+        getUserEmail : state => {
+            return state.user.email;
         },
         getDepartments: state => {
             return state.departments;
@@ -30,16 +37,32 @@ export const store =  new Vuex.Store({
     },
     
     mutations:{
-        setToken(state, token){
+/*         setToken(state, token){
             state.token = token;
             if(token){
                 state.isUserLoggedIn = true;
             }else{
                 state.isUserLoggedIn = false;
             }
+        }, */
+        auth_success(state, {token, user}){
+            state.token = token;
+            state.user = user;
+/*             if(token){
+                state.user = user;
+            }else{
+                state.user = '';
+            } */
+
         },
-        setName(state, name){
-            state.name = name;
+/*         setUser(state, user){
+            state.user = user;
+        }, */
+        logout(state){
+            state.isUserLoggedIn = false;
+            state.user = '';
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
         }
     },
     actions:{
@@ -52,13 +75,18 @@ export const store =  new Vuex.Store({
                     birthday: datas.birthday,
                     password : datas.password
                 });
-                const allDatas = await response.data;
-                console.log(allDatas);
-                commit('setToken', allDatas);
-                commit('setName', allDatas.user.name);
+                console.log(response);
+                    const user = await response.data.user;
+                    const token = await response.data.token;
+                    localStorage.setItem('token', JSON.stringify(token));
+                    localStorage.setItem('user', JSON.stringify(user));
+    /*                 commit('setToken', token);
+                    commit('setUser', user); */
+                    commit('auth_success', {token, user});
                 }
                 catch (error){
-                console.log(error);                     
+                console.log(error.response.data.error);    
+                throw error;                 
             }  
         },
         async loginUser({commit}, datas) {
@@ -67,13 +95,23 @@ export const store =  new Vuex.Store({
                     email : datas.email,
                     password : datas.password
                 });
-                const allDatas = await response.data;
-                console.log(allDatas);
-                commit('setToken', allDatas.token);
-                commit('setName', allDatas.user.name);                
+                    const token = await response.data.token;
+                    const user = await response.data.user;
+                    localStorage.setItem('token', JSON.stringify(token));
+                    localStorage.setItem('user', JSON.stringify(user));
+    
+                    commit('auth_success', {user, token});
+           
                 }
                 catch (error){
-                console.log(error);                      
+                    if(error.response.status === 401){
+                        console.log("incorrect password"); 
+                        throw error;  
+                    }else{
+                        console.log(error);
+                        throw error;
+                    }
+                                      
             }  
         }
     }

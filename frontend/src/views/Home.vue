@@ -5,12 +5,12 @@
             <ul>
               <li>
                 <h3>
-                  <img class="img" src="../assets/newspaper.png" alt="newpaper-icon" height="50px" width="50px">Share News to Collegues
+                  <img class="img" src="../assets/newspaper.png" alt="newpaper-icon" height="50px" width="50px">Share News to colleagues
                 </h3>         
               </li>
               <li>
                 <h3>
-                  <img class="img" src="../assets/colleague.png" alt="colleague-icon" height="50px" width="50px">Connect with collegues
+                  <img class="img" src="../assets/colleague.png" alt="colleague-icon" height="50px" width="50px">Connect with your colleagues
                 </h3>
               </li>
               <li>
@@ -89,6 +89,6 @@ h3{
   }
 
   .groupomania-icon{
-    margin-bottom: 50px;
+    margin-bottom: 80px;
   }
 </style>

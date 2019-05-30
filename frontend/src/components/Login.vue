@@ -1,16 +1,18 @@
 <template>
     <div>
         <b-modal id="login" hide-footer>
-            <form class="col-12">
+            <form class="col-12" @submit.prevent="loginUser()">
                 <div class="form-group ">                               
                     <h3 class="text-center my-3">Login</h3>
-                    <input v-model="email" type="email" placeholder="Email" class="form-control">
+                    <input v-validate="'required|email'" name="email" v-model="email" type="email" placeholder="Email" :class="{'form-control is-invalid': !email, 'form-control is-valid': email}">
+                    <small class="text-danger" v-show="errors.has('email')"> {{ errors.first('email')}}</small>
                 </div>
                 <div class="form-group">
-                    <input v-model="password" type="password" placeholder="Password" class="form-control">
+                    <input v-validate="'required'" name="password" v-model="password" type="password" placeholder="Password" :class="{'form-control is-invalid': !password, 'form-control is-valid': password}">
+                    <small v-show="errors.has('password')" class="text-danger"> {{ errors.first('password') }}</small>
                 </div>
                 <div class="form-group text-center">
-                    <b-button @click="loginUser()" :disabled="!isComplete" class="btn form-control">Login</b-button>                    
+                    <b-button type="submit" :disabled="!isComplete" class="btn form-control">Login</b-button>                    
                 </div>
             </form> 
         </b-modal>
@@ -29,13 +31,13 @@ export default {
         }
     },
         methods : {
-            loginUser(){
-                this.$store.dispatch('loginUser', {
+            async loginUser(){
+                await this.$store.dispatch('loginUser', {
                     email : this.email,
                     password : this.password
-                    }); 
-                this.$router.push('/homepage');
-        }
+                });
+            this.$router.push('/homepage');
+            }
     },
     computed: {
         isComplete(){

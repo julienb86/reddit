@@ -9,10 +9,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Hey {{ name }}</a>
+          <a class="nav-link" href="#">Hey {{  user }}</a>
         </li>
         <li class="nav-item">
-          <router-link @click="logout()" class="nav-link" to="/">Logout</router-link>
+          <a @click="logout()" class="nav-link" href="#" >Logout</a>
         </li>
       </ul>
     </div>
@@ -23,21 +23,16 @@
 
 <script>
 
-import {mapGetters} from 'vuex';
 export default {
   computed:{
-    name(){
-      return this.$store.state.name;
+    user(){
+      return this.$store.state.user.name;
+    },
+    logout(){
+      this.$store.commit('logout');
+      this.$router.push('/');
     }
   },
-  methods:{
-/*     logout(){
-      this.$store.state.user = '';
-      this.$store.state.token = '';
-      this.$store.state.name = " ";
-      this.$router.push('/');
-    } */
-  }
 }
 </script>
 

@@ -4,6 +4,7 @@
 
         <Departments/>
 
+        <Profile/>
 
         <router-view>
             <!-- links from Navbar -->
@@ -18,11 +19,12 @@
 
 import Navbar from '../components/Navbar'
 import Departments from '../components/Departments'
-
+import Profile from './Profile';
 export default {
     components:{
         Navbar,
-        Departments
+        Departments,
+        Profile
     
     },
 
