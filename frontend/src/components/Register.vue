@@ -8,6 +8,7 @@
             <div class="form-group">
                 <input v-validate="'required|email'" name="email" v-model="email" type="email" placeholder="Email" :class="{'form-control is-invalid': !email, 'form-control is-valid': email}" autofocus>
                 <small class="text-danger" v-show="errors.has('email')"> {{ errors.first('email')}}</small>
+                <small class="text-danger" v-if="error" >{{error}}</small>
             </div>
             <div class="form-group" >
                 <input name="name" v-validate="'required'" v-model="name" type="text" placeholder="Full Name" :class="{'form-control is-invalid': !name, 'form-control is-valid': name}">
@@ -54,20 +55,26 @@ export default {
                 department : '',
                 birthday: '',
                 password: '',
-                submitted : false
+                submitted : false,
+                error: ''
             }
         },
     methods:{
         async registerUser(){
+        try {
             await this.$store.dispatch('registerUser', {
-                name : this.name,
-                email : this.email,
-                department : this.department,
-                birthday: this.birthday,
-                password : this.password
-                });
-            this.$router.push('/homepage');            
+            name : this.name,
+            email : this.email,
+            department : this.department,
+            birthday: this.birthday,
+            password : this.password
+            });
+            this.$router.push('/homepage');  
+        } catch (error) {
+            this.error = error.response.data.message;
         }
+    }
+
 /*         async registerUser() {
             try {
                 const response = await Axios.post("http://localhost:3000/api/auth/signup", {

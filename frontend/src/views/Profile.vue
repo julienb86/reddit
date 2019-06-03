@@ -30,27 +30,14 @@ export default {
     },
     data(){
         return{
-            user : this.$root.auth,
-            birthday: ''
+            
         }
             
     },
     methods : {
-        async deleteAccount(){
-            console.log(this.$route.params.id);
-            
-            try {
-                const response = await Axios.delete(`http://localhost:3000/api/auth/user/${this.$route.params.id}`);
-                console.log(response);
-                const data = await response.data;
-                this.$root.auth = {};
-                localStorage.removeItem('auth');
-                this.$router.push('/');
-                console.log(data);
-                }
-                catch (error){
-                console.log(error);            
-            }   
+        deleteAccount(){
+            this.$store.dispatch('deleteAccount');
+            this.$router.push("/");
         }
     },
     computed : {

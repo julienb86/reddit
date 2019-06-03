@@ -10,6 +10,7 @@
                 <div class="form-group">
                     <input v-validate="'required'" name="password" v-model="password" type="password" placeholder="Password" :class="{'form-control is-invalid': !password, 'form-control is-valid': password}">
                     <small v-show="errors.has('password')" class="text-danger"> {{ errors.first('password') }}</small>
+                    <small class="text-danger" v-if="error">{{error}}</small>
                 </div>
                 <div class="form-group text-center">
                     <b-button type="submit" :disabled="!isComplete" class="btn form-control">Login</b-button>                    
@@ -26,18 +27,24 @@ export default {
           data(){
         return {
             email : '',
-            password: ''
+            password: '',
+            error: ''
   
         }
     },
         methods : {
             async loginUser(){
+            try {
                 await this.$store.dispatch('loginUser', {
                     email : this.email,
                     password : this.password
                 });
             this.$router.push('/homepage');
+            
+            } catch (error) {
+                this.error = error.response.data.message;
             }
+        }
     },
     computed: {
         isComplete(){

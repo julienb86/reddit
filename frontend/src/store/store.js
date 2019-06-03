@@ -37,27 +37,19 @@ export const store = new Vuex.Store({
     },
     
     mutations:{
-/*         setToken(state, token){
-            state.token = token;
-            if(token){
-                state.isUserLoggedIn = true;
-            }else{
-                state.isUserLoggedIn = false;
-            }
-        }, */
         auth_success(state, {token, user}){
             state.token = token;
             state.user = user;
-/*             if(token){
-                state.user = user;
-            }else{
-                state.user = '';
-            } */
-
         },
-/*         setUser(state, user){
+        deleteAccount(state){
+            state.token = null;
+            state.user = "";
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+        },
+        setUser(state, user){
             state.user = user;
-        }, */
+        },
         logout(state){
             state.isUserLoggedIn = false;
             state.user = '';
@@ -79,13 +71,12 @@ export const store = new Vuex.Store({
                     const user = await response.data.user;
                     const token = await response.data.token;
                     localStorage.setItem('token', JSON.stringify(token));
-                    localStorage.setItem('user', JSON.stringify(user));
-    /*                 commit('setToken', token);
-                    commit('setUser', user); */
+                    Axios.defaults.headers.common['Authorization'] = token;
                     commit('auth_success', {token, user});
                 }
-                catch (error){
-                console.log(error.response.data.error);    
+                catch(error){
+                    console.log(error.response);
+                    error.response.data.message = "Email already used!";
                 throw error;                 
             }  
         },
@@ -98,21 +89,27 @@ export const store = new Vuex.Store({
                     const token = await response.data.token;
                     const user = await response.data.user;
                     localStorage.setItem('token', JSON.stringify(token));
-                    localStorage.setItem('user', JSON.stringify(user));
-    
+                    Axios.defaults.headers.common['Authorization'] = token;
                     commit('auth_success', {user, token});
            
                 }
                 catch (error){
-                    if(error.response.status === 401){
-                        console.log("incorrect password"); 
-                        throw error;  
-                    }else{
-                        console.log(error);
-                        throw error;
-                    }
+                    error.response.data.message = "Email and password do not match!"
+                    throw error;
                                       
             }  
+        },
+
+        /* is working */
+        async deleteAccount({commit}){            
+            try {
+                /* if a user is connected */
+                await Axios.delete(`http://localhost:3000/api/auth/user/` + this.state.user._id);
+                commit('deleteAccount');
+                }
+                catch (error){
+                console.log(error);            
+            }   
         }
     }
 });
