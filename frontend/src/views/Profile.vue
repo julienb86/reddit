@@ -28,16 +28,26 @@ export default {
         Datepicker,
 
     },
-    data(){
-        return{
-            
-        }
-            
-    },
     methods : {
         deleteAccount(){
+          this.$swal({
+            title: 'Are you sure?',
+            text: 'You can\'t revert your action',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes Delete my account!',
+            cancelButtonText: 'No, Keep it!',
+            showCloseButton: true,
+        }).then((result) => {
+          if(result.value) {
+            this.$swal('Deleted', 'You successfully deleted your account', 'success');
             this.$store.dispatch('deleteAccount');
             this.$router.push("/");
+          } else {
+            this.$swal('Cancelled', 'Your account is still intact', 'info')
+          }
+        });
+
         }
     },
     computed : {
@@ -51,7 +61,3 @@ export default {
 }
 </script>
 
-
-<style scoped>
-
-</style>

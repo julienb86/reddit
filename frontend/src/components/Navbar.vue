@@ -1,5 +1,4 @@
 <template>
-<div class="container-fluid h-100">
   <nav class="navbar navbar-expand-lg">
     <router-link to="/" class="navbar-brand"><img src="../assets/navigation-icon.png" alt="navigation-icon" height="75px" width="75px"></router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,13 +11,11 @@
           <a class="nav-link" href="#">Hey {{  user }}</a>
         </li>
         <li class="nav-item">
-          <a @click="logout()" class="nav-link" href="#" >Logout</a>
+          <a @click="logout()" class="nav-link" href="#">Logout</a>
         </li>
       </ul>
     </div>
   </nav>
-</div>
-
 </template>
 
 <script>
@@ -27,22 +24,35 @@ export default {
   computed:{
     user(){
       return this.$store.state.user.name;
+      }
     },
-    logout(){
-      this.$store.commit('logout');
-      this.$router.push('/');
-    }
-  },
+        methods :{
+        logout(){
+              this.$swal({
+                title: 'Are you sure?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes!',
+                cancelButtonText: 'No!',
+                showCloseButton: true,
+            }).then((result) => {
+              if(result.value) {
+                this.$swal('Logged out!', 'You successfully logged out', 'success');
+                this.$store.commit('logout');
+                this.$router.push('/');
+              } else {
+                this.$swal('Cancelled', 'You are still logged in', 'info')
+              }
+            });
+        }
+  }
 }
 </script>
 
 
 
 <style scoped>
-.container-fluid{
-  margin: 0;
-  padding: 0;
-}
+
 .navbar{
   background-color: #112240;
 }

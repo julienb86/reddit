@@ -6,7 +6,7 @@ import wysiwyg from "vue-wysiwyg";
 import "vue-wysiwyg/dist/vueWysiwyg.css";
 import {store} from './store/store';
 import BootstrapVue from 'bootstrap-vue'
-
+import VueSweetalert2 from 'vue-sweetalert2';
 
 
 Vue.use(BootstrapVue)
@@ -16,7 +16,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(VeeValidate);
 Vue.use(wysiwyg, {});
 Vue.use(BootstrapVue);
-
+Vue.use(VueSweetalert2);
 
 Vue.config.productionTip = false;
 

@@ -1,30 +1,31 @@
 <template>
-    <div class="row">
-        <Navbar/>
+<div class="container-fluid">
 
-        <Departments/>
+    <Navbar/>
 
-        <Profile/>
+<div class="row">
+    <Departments/>
 
-        <router-view>
-            <!-- links from Navbar -->
-            <!-- links from Departments -->
-        </router-view>
-    </div>
+    <router-view>
+        <!-- links from Navbar -->
+        <!-- links from Departments -->
+    </router-view>
+</div>
+
+</div>
+
 
 </template>
 
 
 <script>
-
 import Navbar from '../components/Navbar'
 import Departments from '../components/Departments'
-import Profile from './Profile';
 export default {
     components:{
         Navbar,
         Departments,
-        Profile
+
     
     },
 
@@ -33,3 +34,9 @@ export default {
 }
 </script>
 
+<style scoped>
+.container-fluid{
+  margin: 0;
+  padding: 0;
+}
+</style>

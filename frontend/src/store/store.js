@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Axios from 'axios';
 
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -19,7 +20,7 @@ export const store = new Vuex.Store({
     },
 
     getters:{
-        getUser: state => {
+        getUser: (state) => {
             return state.user.name;
         },
         getUserDepartment : state => {
@@ -71,11 +72,11 @@ export const store = new Vuex.Store({
                     const user = await response.data.user;
                     const token = await response.data.token;
                     localStorage.setItem('token', JSON.stringify(token));
+                    localStorage.setItem('user', JSON.stringify(user));
                     Axios.defaults.headers.common['Authorization'] = token;
                     commit('auth_success', {token, user});
                 }
                 catch(error){
-                    console.log(error.response);
                     error.response.data.message = "Email already used!";
                 throw error;                 
             }  
@@ -89,9 +90,9 @@ export const store = new Vuex.Store({
                     const token = await response.data.token;
                     const user = await response.data.user;
                     localStorage.setItem('token', JSON.stringify(token));
+                    localStorage.setItem('user', JSON.stringify(user));
                     Axios.defaults.headers.common['Authorization'] = token;
                     commit('auth_success', {user, token});
-           
                 }
                 catch (error){
                     error.response.data.message = "Email and password do not match!"
@@ -110,6 +111,22 @@ export const store = new Vuex.Store({
                 catch (error){
                 console.log(error);            
             }   
+        },
+        async postArticle({commit}, datas){
+            try {
+                const response = await Axios.post('http://localhost:3000/api/articles', {
+                userId : datas.userId,
+                department : datas.department,
+                content : datas.content,
+                imageUrl : datas.imageUrl
+            });
+            const data = await response.data;
+            console.log(data);
+            
+            } catch (error) {
+                console.log(error);
+                
+            }
         }
     }
 });

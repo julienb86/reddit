@@ -72,26 +72,11 @@ export default {
             this.$router.push('/homepage');  
         } catch (error) {
             this.error = error.response.data.message;
+            this.email = "";
         }
     }
 
-/*         async registerUser() {
-            try {
-                const response = await Axios.post("http://localhost:3000/api/auth/signup", {
-                    name : this.name,
-                    email : this.email,
-                    department : this.department,
-                    birthday: this.birthday,
-                    password : this.password
-                });
-                
-                const allDatas = await response.data;
-                console.log(allDatas);                
-                }
-                catch (error){
-                console.log(error);                     
-            }  
-        }, */
+
     },
         computed: {
             ...mapGetters([

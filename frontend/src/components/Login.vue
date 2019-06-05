@@ -39,10 +39,12 @@ export default {
                     email : this.email,
                     password : this.password
                 });
-            this.$router.push('/homepage');
+            this.$router.push('/homepage/profile');
             
             } catch (error) {
                 this.error = error.response.data.message;
+                this.email = "";
+                this.password = "";
             }
         }
     },

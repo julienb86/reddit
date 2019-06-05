@@ -1,23 +1,8 @@
 const Articles = require('../models/articles');
 
-exports.getAllArticles = (req, res, next) => {
-    Articles.findOne({_id : req.params.id}).then(
-       (article) => {
-           res.status(200).json(article);
-       }
-    ).catch(
-        (error) => {
-            res.status(500).json({
-                error : error
-            });
-        }
-    );
-}
-
-
 exports.createArticles = (req, res, next) => {
     const articles = new Articles({
-/*         userId : req.body.userId, */
+        userId : req.body.userId,
         department : req.body.department,
         content : req.body.content,
         imageUrl : req.body.imageUrl,
@@ -31,10 +16,24 @@ exports.createArticles = (req, res, next) => {
         }
     ).catch(
         () => {
-            res.status(500).json({
+            res.status(400).json({
                 error : error
             });  
         }
     );
 }
 
+
+exports.getAllArticles = (req, res, next) => {
+    Articles.findOne({_id : req.params.id}).then(
+       (article) => {
+           res.status(200).json(article);
+       }
+    ).catch(
+        (error) => {
+            res.status(500).json({
+                error : error
+            });
+        }
+    );
+}

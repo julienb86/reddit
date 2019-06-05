@@ -17,15 +17,18 @@ const router = new Router({
         },
         {
             path: '/homepage',
-            component : Homepage
-        },
-        {
-            path: '/homepage/profile',
-            component : Profile
-        },
-        {
-            path: '/homepage/articles',
-            component : Articles
+            component : Homepage,
+
+        children: [
+            {
+              path: 'profile',
+              component: Profile
+            },
+            {
+                path: '/articles',
+                component : Articles
+            }
+        ]
         }
 ]
 
