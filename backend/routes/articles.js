@@ -8,6 +8,6 @@ const articlesCtrl = require('../controllers/articles');
 /* add auth below */
 router.get('/', articlesCtrl.getAllArticles);
 router.post('/', articlesCtrl.createArticles);
-
+router.get('/:id', articlesCtrl.getOneArticle);
 
 module.exports = router;

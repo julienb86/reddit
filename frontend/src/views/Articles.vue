@@ -10,6 +10,7 @@
             </div>
         </div>
     </form>
+    <router-view></router-view>
 </div>
 </template>
 
@@ -18,8 +19,7 @@ import Axios from 'axios';
 
 export default {
     data(){
-        return{
-            department : 'marketing',
+        return {
             content : '',
             imageUrl : ''
         }
@@ -34,16 +34,13 @@ export default {
             try {
                 await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
-                department : this.department,
+                department : this.$store.state.user.department,
                 content : this.content,
                 imageUrl : this.imageUrl
             }); 
             } catch (error) {
                 console.log(error);
-                
             }
-
-
         }
     }
 }

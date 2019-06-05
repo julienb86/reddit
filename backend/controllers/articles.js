@@ -23,9 +23,24 @@ exports.createArticles = (req, res, next) => {
     );
 }
 
-
+exports.getOneArticle = (req, res, next) => {
+    Articles.findOne({
+        _id : req.params.id
+        
+    }).then(
+        (article) => {
+            res.status(200).json(article)
+        }
+    ).catch(
+        (error) => {
+            res.status(404).json({
+                error : error
+            });
+        }
+    );
+}
 exports.getAllArticles = (req, res, next) => {
-    Articles.findOne({_id : req.params.id}).then(
+    Articles.find().then(
        (article) => {
            res.status(200).json(article);
        }

@@ -1,6 +1,6 @@
 <template>
 <div class="row col-4 offset-3 mx-auto">
-        <div class="">  
+        <div>  
             <form class="form" @submit.prevent="registerProfile()">
                 <div class="d-flex my-5 justify-content-around">
                     <img class="img flex-1" src="../assets/profile-icon.png" alt="newpaper-icon" height="100px" width="100px">

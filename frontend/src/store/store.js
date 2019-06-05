@@ -15,7 +15,7 @@ export const store = new Vuex.Store({
             "Marketing",
             "HR",
             "Development",
-            "UI/UX"
+            "UI-UX"
         ]
     },
 
@@ -114,14 +114,12 @@ export const store = new Vuex.Store({
         },
         async postArticle({commit}, datas){
             try {
-                const response = await Axios.post('http://localhost:3000/api/articles', {
+                await Axios.post('http://localhost:3000/api/articles', {
                 userId : datas.userId,
                 department : datas.department,
                 content : datas.content,
                 imageUrl : datas.imageUrl
             });
-            const data = await response.data;
-            console.log(data);
             
             } catch (error) {
                 console.log(error);

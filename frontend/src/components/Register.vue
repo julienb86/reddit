@@ -69,7 +69,7 @@ export default {
             birthday: this.birthday,
             password : this.password
             });
-            this.$router.push('/homepage');  
+            this.$router.push('/homepage/profile');  
         } catch (error) {
             this.error = error.response.data.message;
             this.email = "";

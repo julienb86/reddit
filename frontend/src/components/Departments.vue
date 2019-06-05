@@ -1,7 +1,8 @@
 <template>
         <div class="col-md-2 col-xm-4 left">
             <ul class="col-5 offset-2" v-for="depart in getDepartments" :key="depart.id">
-                <li><a @click="getArticles()" href="#">{{ depart }}</a></li>
+<!--                 <li><a @click="getArticles()" href="#" :id="depart">{{ depart }}</a></li> -->
+                <li><router-link :to="`${depart}`" >{{ depart }}</router-link></li>
             </ul>
         </div>
 </template>
@@ -16,14 +17,6 @@ export default {
             'getDepartments'
         ]),
 
-    },
-    methods : {
-        /* move it to the store */
-        async getArticles(){
-            const response = await Axios.get("http://localhost:3000/api/articles");
-            console.log(response);
-            this.$router.push('/articles');
-        }
     }
 }
 </script>
