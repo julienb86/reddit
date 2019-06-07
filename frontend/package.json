@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bootstrap-vue": "^2.0.0-rc.22",
     "core-js": "^2.6.5",
     "vee-validate": "^2.2.7",
     "vue": "^2.6.10",
@@ -17,6 +18,7 @@
     "vue-router": "^3.0.6",
     "vue-sweetalert2": "^2.0.5",
     "vue-wysiwyg": "^1.7.2",
+    "vuejs-datepicker": "^1.5.4",
     "vuex": "^3.1.1"
   },
   "devDependencies": {

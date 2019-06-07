@@ -14,9 +14,9 @@
 
 
         <div class="row">
-            <div class="col-md-10 col-xm-8" v-if="articles.data" v-for="article in articles.data" :key="article.id">
+            <div class="col-md-10 col-xm-8" v-for="article in articles" :key="article.id">
 
-                <Article :article= "article"/>
+                <Article :article= "article" />
 
             </div>
         </div>
@@ -36,9 +36,15 @@ export default {
     },
     data(){
         return{
-            articles : {},
+            articles : [],
             content : '',
             imageUrl : ''
+        }
+    },
+    watch: {
+        articles(newValue, old){
+            
+            
         }
     },
 
@@ -48,23 +54,28 @@ export default {
         },
         getArticles(){
             Axios.get("http://localhost:3000/api/articles").then(response => {
-                console.log(response);
-                this.articles = response;
-                /* this.articles = response.data; */
-            });
-            
-            
+                response.data.forEach(res => {
+                    if(res.department === "Marketing"){
+                console.log(res);  
+                this.articles.push(res); 
+                    }
+                });
+
+            })
+    
         },
 
         async postArticle(){
             try {
-               const response = await this.$store.dispatch('postArticle', {
+                const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
                 department : this.$store.state.user.department,
                 content : this.content,
                 imageUrl : this.imageUrl
             }); 
             console.log(response);
+            
+            
             } catch (error) {
                 console.log(error);
             }

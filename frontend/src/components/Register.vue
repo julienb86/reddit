@@ -72,7 +72,6 @@ export default {
             this.$router.push('/homepage/profile');  
         } catch (error) {
             this.error = error.response.data.message;
-            this.email = "";
         }
     }
 
