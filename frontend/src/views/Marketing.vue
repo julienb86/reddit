@@ -6,7 +6,7 @@
             <div class="form-group">
                 <textarea v-model="content" class="form-control" rows="3"></textarea>
                 <div class="row">
-                    <input @change="getFile" type="file" ref="files" class="form-control-file">
+                    <input @change="getFile" type="file" ref="file" class="form-control-file">
                     <button type="submit" class="btn btn-primary mb-2">Submit</button>
                 </div>
             </div>
@@ -15,8 +15,8 @@
 
         <div class="row">
             <div class="col-md-10 col-xm-8" v-for="article in articles" :key="article.id">
-
-                <Article :article= "article" />
+                
+                <Article :article="article" />
 
             </div>
         </div>
@@ -26,60 +26,58 @@
 <script>
 import Axios from "axios";
 import Article from "../components/Article";
+import {mapState} from 'vuex';
 
 export default {
+
     components : {
         Article
     },
     mounted() {
-        this.getArticles();
+        this.$store.dispatch('getArticles', "Marketing"); 
     },
     data(){
         return{
-            articles : [],
             content : '',
-            imageUrl : ''
+            file : ''
         }
     },
-    watch: {
-        articles(newValue, old){
-            
-            
-        }
+    computed : {
+        ...mapState([
+            'articles'
+        ])
     },
 
     methods : {
         getFile(){
-            this.imageUrl = this.$refs.files.imageUrl;
-        },
-        getArticles(){
-            Axios.get("http://localhost:3000/api/articles").then(response => {
-                response.data.forEach(res => {
-                    if(res.department === "Marketing"){
-                console.log(res);  
-                this.articles.push(res); 
-                    }
-                });
-
-            })
-    
+            this.file = this.$refs.file.files[0].name;            
         },
 
         async postArticle(){
             try {
-                const response = await this.$store.dispatch('postArticle', {
+                await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
-                department : this.$store.state.user.department,
+                department : this.$store.state.departments[0],
                 content : this.content,
-                imageUrl : this.imageUrl
-            }); 
-            console.log(response);
-            
-            
+                file : this.file
+            });             
             } catch (error) {
                 console.log(error);
             }
         }
+
+/*         async postArticle(){
+            try {
+                await Axios.post('http://localhost:3000/api/articles', {
+                userId : this.$store.state.user._id,
+                department : this.$store.state.departments[0],
+                content : this.content,
+                imageUrl : this.file
+            });             
+            } catch (error) {
+                console.log(error);
+            }
+        } */
     }
 }
 </script>

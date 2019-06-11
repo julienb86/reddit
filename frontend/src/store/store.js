@@ -16,7 +16,9 @@ export const store = new Vuex.Store({
             "HR",
             "Development",
             "UI-UX"
-        ]
+        ],
+        articles : [],
+        department : ''
     },
 
     getters:{
@@ -34,6 +36,12 @@ export const store = new Vuex.Store({
         },
         getDepartments: state => {
             return state.departments;
+        },
+        getArticles: state => {
+            return state.articles;
+        },
+        getDepartment : state => {
+            return state.department;
         }
     },
     
@@ -56,7 +64,10 @@ export const store = new Vuex.Store({
             state.user = '';
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-        }
+        },
+        setArticles(state, articles){
+            state.articles = articles;
+        },
     },
     actions:{
         async registerUser({commit}, datas) {
@@ -73,7 +84,7 @@ export const store = new Vuex.Store({
                     const token = await response.data.token;
                     localStorage.setItem('token', JSON.stringify(token));
                     localStorage.setItem('user', JSON.stringify(user));
-                    Axios.defaults.headers.common['Authorization'] = token;
+                    Axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                     commit('auth_success', {token, user});
                 }
                 catch(error){
@@ -91,7 +102,7 @@ export const store = new Vuex.Store({
                     const user = await response.data.user;
                     localStorage.setItem('token', JSON.stringify(token));
                     localStorage.setItem('user', JSON.stringify(user));
-                    Axios.defaults.headers.common['Authorization'] = token;
+                    Axios.defaults.headers.common['Authorization'] = 'Bearer ' +  token;
                     commit('auth_success', {user, token});
                 }
                 catch (error){
@@ -101,7 +112,6 @@ export const store = new Vuex.Store({
             }  
         },
 
-        /* is working */
         async deleteAccount({commit}){            
             try {
                 /* if a user is connected */
@@ -112,20 +122,37 @@ export const store = new Vuex.Store({
                 console.log(error);            
             }   
         },
-        async postArticle({commit}, datas){
+        async postArticle(datas){
+            Axios.defaults.headers.common['authorization'] = 'Bearer ' + this.state.token;
+            const formData = new FormData();
+            formData.append('userId', datas.userId);
+            formData.append('department', datas.department);
+            formData.append('content', datas.content);
+            formData.append('file', datas.file);
             try {
-                await Axios.post('http://localhost:3000/api/articles', {
-                userId : datas.userId,
-                department : datas.department,
-                content : datas.content,
-                imageUrl : datas.imageUrl
-            });
-            
+                await Axios.post('http://localhost:3000/api/articles', formData);
+                /* await this.getArticles(); */
             } catch (error) {
                 console.log(error);
                 
             }
-        }
+        },
+        async getArticles({commit}, depart){
+            try{
+                const response = await Axios.get('http://localhost:3000/api/articles');
+                const articles = await response.data;
+                articles.forEach(article => {
+                    if(article.department.includes(depart)){
+                        commit('setArticles', articles);
+                        console.log(article);  
+                    }      
+                });
+                
+            }catch(error){
+                console.log(error);
+                
+            }
+        },
     }
 });
 

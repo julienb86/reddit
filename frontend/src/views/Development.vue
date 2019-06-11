@@ -6,7 +6,7 @@
             <div class="form-group">
                 <textarea v-model="content" class="form-control" rows="3"></textarea>
                 <div class="row">
-                    <input @change="getFile" type="file" ref="files" class="form-control-file">
+                    <input @change="getFile" type="file" ref="files">
                     <button type="submit" class="btn btn-primary mb-2">Submit</button>
                 </div>
             </div>
@@ -50,12 +50,12 @@ export default {
 
     methods : {
         getFile(){
-            this.imageUrl = this.$refs.files.imageUrl;
+            this.imageUrl = this.$refs.imageUrl;
         },
         getArticles(){
             Axios.get("http://localhost:3000/api/articles").then(response => {
                 response.data.forEach(res => {
-                    if(res.department === "development"){
+                    if(res.department === "Development"){
                 console.log(res);  
                 this.articles.push(res); 
                     }
@@ -69,7 +69,7 @@ export default {
             try {
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
-                department : this.$store.state.user.department,
+                department : this.$store.state.departments[2],
                 content : this.content,
                 imageUrl : this.imageUrl
             }); 

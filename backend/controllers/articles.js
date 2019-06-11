@@ -1,26 +1,50 @@
 const Articles = require('../models/articles');
+const fs = require('fs');
 
 exports.createArticles = (req, res, next) => {
-    const articles = new Articles({
-        userId : req.body.userId,
-        department : req.body.department,
-        content : req.body.content,
-        imageUrl : req.body.imageUrl,
-        created : new Date()
-    });
-    articles.save().then(
-        () => {
-            res.status(201).json({
-                message: "Articles successfully created!"
-            });
-        }
-    ).catch(
-        () => {
-            res.status(400).json({
-                error : error
-            });  
-        }
-    );
+    const url = req.protocol + '://' + req.get('host');
+    if(req.file){
+        const articles = new Articles({
+            userId : req.body.userId,
+            department : req.body.department,
+            content : req.body.content,
+            imageUrl: url + "/images/" + req.file.filename,
+            created : new Date()
+        });
+            articles.save().then(
+                () => {
+                    res.status(201).json({
+                        message: "Articles successfully created!"
+                    });
+                }
+            ).catch(
+                () => {
+                    res.status(400).json({
+                        error : error
+                    });  
+                }
+            );
+        }else{
+            const articles = new Articles({
+                userId : req.body.userId,
+                department : req.body.department,
+                content : req.body.content,
+                created : new Date()
+        });
+        articles.save().then(
+            () => {
+                res.status(201).json({
+                    message: "Articles successfully created!"
+                });
+            }
+        ).catch(
+            () => {
+                res.status(400).json({
+                    error : error
+                });  
+            }
+        );
+    }
 }
 
 exports.getOneArticle = (req, res, next) => {

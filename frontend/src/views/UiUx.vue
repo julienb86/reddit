@@ -26,50 +26,49 @@
 <script>
 import Axios from "axios";
 import Article from "../components/Article";
+import {mapState} from 'vuex';
 
 export default {
+
     components : {
         Article
     },
     mounted() {
-        this.getArticles();
+        this.$store.dispatch('getArticles', "UI-UX"); 
     },
     data(){
         return{
-            articles : [],
             content : '',
             imageUrl : ''
         }
     },
-    watch: {
-        articles(newValue, old){
-            
-            
-        }
+    computed : {
+        ...mapState([
+            'articles'
+        ])
     },
 
     methods : {
         getFile(){
             this.imageUrl = this.$refs.files.imageUrl;
         },
-        getArticles(){
-            Axios.get("http://localhost:3000/api/articles").then(response => {
-                response.data.forEach(res => {
-                    if(res.department === "UI-UX"){
-                console.log(res);  
-                this.articles.push(res); 
-                    }
-                });
+/*         async getArticles(){
+            const response = await this.$store.dispatch('getArticles');
+            const allDatas = await response.data;
+            allDatas.forEach(data => {
+            if(data.department === "Marketing"){
+                console.log(allDatas);
+                this.articles.push(allDatas);
+            }
 
-            })
-    
-        },
+            });
+        }, */
 
         async postArticle(){
             try {
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
-                department : this.$store.state.user.department,
+                department : this.$store.state.departments[3],
                 content : this.content,
                 imageUrl : this.imageUrl
             }); 
