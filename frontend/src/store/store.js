@@ -42,6 +42,9 @@ export const store = new Vuex.Store({
         },
         getDepartment : state => {
             return state.department;
+        },
+        getToken : state => {
+            return state.token;
         }
     },
     
@@ -107,12 +110,12 @@ export const store = new Vuex.Store({
                 }
                 catch (error){
                     error.response.data.message = "Email and password do not match!"
-                    throw error;
-                                      
+                    throw error;                        
             }  
         },
 
-        async deleteAccount({commit}){            
+        async deleteAccount({commit}){ 
+            Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;           
             try {
                 /* if a user is connected */
                 await Axios.delete(`http://localhost:3000/api/auth/user/` + this.state.user._id);
@@ -123,39 +126,34 @@ export const store = new Vuex.Store({
             }   
         },
         async postArticle({commit},datas){
-            Axios.defaults.headers.common['authorization'] = 'Bearer ' + this.state.token;
+            Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;
+            console.log(this.state.token);
+            
             const formData = new FormData();
             formData.append('userId', datas.userId);
             formData.append('department', datas.department);
             formData.append('content', datas.content);
             formData.append('file', datas.file);
-            console.log(datas.file);
             try {
                 await Axios.post('http://localhost:3000/api/articles', formData);
-                commit ('setArticles', formData);
-                /* await this.getArticles(); */  
-
-                              
+                commit('setArticles', formData);
             } catch (error) {
                 console.log(error);
                 throw error;
-                
             }
         },
         async getArticles({commit}, depart){
+            
             try{
+                Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;
                 const response = await Axios.get('http://localhost:3000/api/articles');
                 const articles = await response.data;
-/*                 articles.forEach(article => {
+                articles.forEach(article => {
                     if(article.department.includes(depart)){
                         commit('setArticles', articles);
                         console.log(article);  
                     }      
                 });
-                 */
-                commit('setArticles', articles);
-                console.log(articles);
-                
             }catch(error){
                 console.log(error);
                 

@@ -49,7 +49,7 @@ export default {
     },
 
     methods : {
-        getFile(event){
+        getFile(){
             this.file = this.$refs.file.files[0];        
         },
 
@@ -61,29 +61,11 @@ export default {
                     content : this.content,
                     file : this.file
                 });   
-              
-                                          
+            this.$store.dispatch('getArticles', "Marketing");                   
             } catch (error) {
                 console.log(error);
             }
         }
-
-/*         async postArticle(){
-            try {
-            const formData = new FormData();
-            formData.append('userId', this.$store.state.user._id);
-            formData.append('department', this.$store.state.departments[0]);
-            formData.append('content', this.content);
-            formData.append('imageUrl', this.imageUrl);
-                await Axios.post('http://localhost:3000/api/articles', formData);
-                console.log(this.$refs.file.files[0].name);
-                console.log(this.imageUrl);
-                
-                             
-            } catch (error) {
-                console.log(error);
-            }
-        } */
     }
 }
 </script>
