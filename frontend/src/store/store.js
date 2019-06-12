@@ -122,18 +122,23 @@ export const store = new Vuex.Store({
                 console.log(error);            
             }   
         },
-        async postArticle(datas){
+        async postArticle({commit},datas){
             Axios.defaults.headers.common['authorization'] = 'Bearer ' + this.state.token;
             const formData = new FormData();
             formData.append('userId', datas.userId);
             formData.append('department', datas.department);
             formData.append('content', datas.content);
             formData.append('file', datas.file);
+            console.log(datas.file);
             try {
                 await Axios.post('http://localhost:3000/api/articles', formData);
-                /* await this.getArticles(); */
+                commit ('setArticles', formData);
+                /* await this.getArticles(); */  
+
+                              
             } catch (error) {
                 console.log(error);
+                throw error;
                 
             }
         },
@@ -141,12 +146,15 @@ export const store = new Vuex.Store({
             try{
                 const response = await Axios.get('http://localhost:3000/api/articles');
                 const articles = await response.data;
-                articles.forEach(article => {
+/*                 articles.forEach(article => {
                     if(article.department.includes(depart)){
                         commit('setArticles', articles);
                         console.log(article);  
                     }      
                 });
+                 */
+                commit('setArticles', articles);
+                console.log(articles);
                 
             }catch(error){
                 console.log(error);

@@ -2,11 +2,11 @@
 
 
     <div class="col-md-10 col-xm-8">
-        <form @submit.prevent="postArticle()">
+        <form @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
             <div class="form-group">
                 <textarea v-model="content" class="form-control" rows="3"></textarea>
                 <div class="row">
-                    <input @change="getFile" type="file" ref="file" class="form-control-file">
+                    <input @change="getFile" type="file" ref="file" class="form-control-file" >
                     <button type="submit" class="btn btn-primary mb-2">Submit</button>
                 </div>
             </div>
@@ -39,7 +39,7 @@ export default {
     data(){
         return{
             content : '',
-            file : ''
+            file : null
         }
     },
     computed : {
@@ -49,18 +49,20 @@ export default {
     },
 
     methods : {
-        getFile(){
-            this.file = this.$refs.file.files[0].name;            
+        getFile(event){
+            this.file = this.$refs.file.files[0];        
         },
 
         async postArticle(){
             try {
                 await this.$store.dispatch('postArticle', {
-                userId : this.$store.state.user._id,
-                department : this.$store.state.departments[0],
-                content : this.content,
-                file : this.file
-            });             
+                    userId : this.$store.state.user._id,
+                    department : this.$store.state.departments[0],
+                    content : this.content,
+                    file : this.file
+                });   
+              
+                                          
             } catch (error) {
                 console.log(error);
             }
@@ -68,12 +70,16 @@ export default {
 
 /*         async postArticle(){
             try {
-                await Axios.post('http://localhost:3000/api/articles', {
-                userId : this.$store.state.user._id,
-                department : this.$store.state.departments[0],
-                content : this.content,
-                imageUrl : this.file
-            });             
+            const formData = new FormData();
+            formData.append('userId', this.$store.state.user._id);
+            formData.append('department', this.$store.state.departments[0]);
+            formData.append('content', this.content);
+            formData.append('imageUrl', this.imageUrl);
+                await Axios.post('http://localhost:3000/api/articles', formData);
+                console.log(this.$refs.file.files[0].name);
+                console.log(this.imageUrl);
+                
+                             
             } catch (error) {
                 console.log(error);
             }

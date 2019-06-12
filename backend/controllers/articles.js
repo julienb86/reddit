@@ -1,7 +1,8 @@
 const Articles = require('../models/articles');
-const fs = require('fs');
+
 
 exports.createArticles = (req, res, next) => {
+    console.log(req);
     const url = req.protocol + '://' + req.get('host');
     if(req.file){
         const articles = new Articles({
@@ -14,7 +15,7 @@ exports.createArticles = (req, res, next) => {
             articles.save().then(
                 () => {
                     res.status(201).json({
-                        message: "Articles successfully created!"
+                        message: "Articles with images successfully created!"
                     });
                 }
             ).catch(
@@ -34,7 +35,7 @@ exports.createArticles = (req, res, next) => {
         articles.save().then(
             () => {
                 res.status(201).json({
-                    message: "Articles successfully created!"
+                    message: "Articles without images successfully created!"
                 });
             }
         ).catch(
