@@ -57,7 +57,7 @@ export default {
             try {
                 await this.$store.dispatch('postArticle', {
                     userId : this.$store.state.user._id,
-                    department : this.$store.state.departments[0],
+                    department : this.$store.state.departments[1],
                     content : this.content,
                     file : this.file
                 });   

@@ -69,8 +69,10 @@ export const store = new Vuex.Store({
             localStorage.removeItem('user');
         },
         setArticles(state, articles){
-            state.articles = articles;
-        },
+            if(articles){
+                state.articles.push(articles);                   
+            }
+        }
     },
     actions:{
         async registerUser({commit}, datas) {
@@ -127,8 +129,6 @@ export const store = new Vuex.Store({
         },
         async postArticle({commit},datas){
             Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;
-            console.log(this.state.token);
-            
             const formData = new FormData();
             formData.append('userId', datas.userId);
             formData.append('department', datas.department);
@@ -143,17 +143,16 @@ export const store = new Vuex.Store({
             }
         },
         async getArticles({commit}, depart){
-            
+            Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;
             try{
-                Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;
                 const response = await Axios.get('http://localhost:3000/api/articles');
-                const articles = await response.data;
+                const articles = await response.data; 
                 articles.forEach(article => {
-                    if(article.department.includes(depart)){
-                        commit('setArticles', articles);
-                        console.log(article);  
-                    }      
-                });
+                    if(article.department.includes(depart)){  
+                        commit('setArticles', article);
+                        console.log(article.length); 
+                    }
+                });        
             }catch(error){
                 console.log(error);
                 

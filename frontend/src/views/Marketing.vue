@@ -61,8 +61,10 @@ export default {
                     content : this.content,
                     file : this.file
                 });   
-            this.$store.dispatch('getArticles', "Marketing");                   
-            } catch (error) {
+            this.$store.dispatch('getArticles', "Marketing");
+
+
+                } catch (error) {
                 console.log(error);
             }
         }
