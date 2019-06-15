@@ -2,11 +2,11 @@
 
 
     <div class="col-md-10 col-xm-8">
-        <form @submit.prevent="postArticle()">
+        <form @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
             <div class="form-group">
                 <textarea v-model="content" class="form-control" rows="3"></textarea>
                 <div class="row">
-                    <input @change="getFile" type="file" ref="files">
+                    <input @change="getFile" type="file" ref="file" class="form-control-file" >
                     <button type="submit" class="btn btn-primary mb-2">Submit</button>
                 </div>
             </div>
@@ -38,19 +38,13 @@ export default {
         return{
             articles : [],
             content : '',
-            imageUrl : ''
-        }
-    },
-    watch: {
-        articles(newValue, old){
-            
-            
+            file : ''
         }
     },
 
     methods : {
         getFile(){
-            this.imageUrl = this.$refs.imageUrl;
+            this.file = this.$refs.file.files[0];
         },
         getArticles(){
             Axios.get("http://localhost:3000/api/articles").then(response => {
@@ -71,11 +65,13 @@ export default {
                 userId : this.$store.state.user._id,
                 department : this.$store.state.departments[2],
                 content : this.content,
-                imageUrl : this.imageUrl
+                file : this.file
             }); 
             console.log(response);
             
-            
+            this.getArticles();
+            this.content = '';
+            this.file = '';
             } catch (error) {
                 console.log(error);
             }

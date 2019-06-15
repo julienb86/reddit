@@ -26,6 +26,8 @@ export default {
 .left{
     background-color:#EAE8E6;
     height: 100vh;
+    position: sticky;
+    top: 0;
 }
 
 </style>

@@ -2,11 +2,11 @@
 
 
     <div class="col-md-10 col-xm-8">
-        <form @submit.prevent="postArticle()">
+        <form @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
             <div class="form-group">
                 <textarea v-model="content" class="form-control" rows="3"></textarea>
                 <div class="row">
-                    <input @change="getFile" type="file" ref="files" class="form-control-file">
+                    <input @change="getFile" type="file" ref="file" class="form-control-file" >
                     <button type="submit" class="btn btn-primary mb-2">Submit</button>
                 </div>
             </div>
@@ -26,43 +26,37 @@
 <script>
 import Axios from "axios";
 import Article from "../components/Article";
-import {mapState} from 'vuex';
 
 export default {
-
     components : {
         Article
     },
     mounted() {
-        this.$store.dispatch('getArticles', "UI-UX"); 
+        this.getArticles();
     },
     data(){
         return{
+            articles : [],
             content : '',
-            imageUrl : ''
+            file : ''
         }
-    },
-    computed : {
-        ...mapState([
-            'articles'
-        ])
     },
 
     methods : {
         getFile(){
-            this.imageUrl = this.$refs.files.imageUrl;
+            this.file = this.$refs.file.files[0];
         },
-/*         async getArticles(){
-            const response = await this.$store.dispatch('getArticles');
-            const allDatas = await response.data;
-            allDatas.forEach(data => {
-            if(data.department === "Marketing"){
-                console.log(allDatas);
-                this.articles.push(allDatas);
-            }
+        getArticles(){
+            Axios.get("http://localhost:3000/api/articles").then(response => {
+                response.data.forEach(res => {
+                    if(res.department === "UI-UX"){
+                this.articles.push(res); 
+                    }
+                });
 
-            });
-        }, */
+            })
+    
+        },
 
         async postArticle(){
             try {
@@ -70,11 +64,13 @@ export default {
                 userId : this.$store.state.user._id,
                 department : this.$store.state.departments[3],
                 content : this.content,
-                imageUrl : this.imageUrl
+                file : this.file
             }); 
             console.log(response);
             
-            
+            this.getArticles();
+            this.content = '';
+            this.file = '';
             } catch (error) {
                 console.log(error);
             }

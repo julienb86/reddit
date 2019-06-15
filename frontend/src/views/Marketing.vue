@@ -15,8 +15,8 @@
 
         <div class="row">
             <div class="col-md-10 col-xm-8" v-for="article in articles" :key="article.id">
-                
-                <Article :article="article" />
+
+                <Article :article= "article" />
 
             </div>
         </div>
@@ -26,20 +26,19 @@
 <script>
 import Axios from "axios";
 import Article from "../components/Article";
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
-
     components : {
         Article
     },
     mounted() {
-        this.$store.dispatch('getArticles', "Marketing"); 
+        this.$store.dispatch('getArticles', "Marketing");
     },
     data(){
         return{
             content : '',
-            file : null
+            file : ''
         }
     },
     computed : {
@@ -47,24 +46,37 @@ export default {
             'articles'
         ])
     },
-
     methods : {
         getFile(){
-            this.file = this.$refs.file.files[0];        
+            this.file = this.$refs.file.files[0];
         },
+/*         getArticles(){
+            Axios.get("http://localhost:3000/api/articles").then(response => {
+                response.data.forEach(res => {
+                    if(res.department === "Marketing"){
+                console.log(res);  
+                this.articles.push(res); 
+                    }
+                });
+
+            })
+    
+        }, */
 
         async postArticle(){
             try {
-                await this.$store.dispatch('postArticle', {
-                    userId : this.$store.state.user._id,
-                    department : this.$store.state.departments[0],
-                    content : this.content,
-                    file : this.file
-                });   
+                const response = await this.$store.dispatch('postArticle', {
+                userId : this.$store.state.user._id,
+                department : this.$store.state.departments[0],
+                content : this.content,
+                file : this.file
+            }); 
+            console.log(response);
+            
             this.$store.dispatch('getArticles', "Marketing");
-
-
-                } catch (error) {
+            this.content = '';
+            this.file = '';
+            } catch (error) {
                 console.log(error);
             }
         }
