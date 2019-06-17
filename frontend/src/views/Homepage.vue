@@ -1,7 +1,9 @@
 <template>
 <div class="container-fluid">
-
-    <Navbar/>
+    <div class="row">
+        <Navbar/>
+    </div>
+    
 
 <div class="row">
     <Departments/>

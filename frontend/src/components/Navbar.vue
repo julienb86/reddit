@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="col-12 navbar navbar-expand-lg">
     <router-link to="/" class="navbar-brand"><img src="../assets/navigation-icon.png" alt="navigation-icon" height="75px" width="75px"></router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -55,6 +55,9 @@ export default {
 
 .navbar{
   background-color: #112240;
+}
+.navbar-toggler{
+  color: antiquewhite;
 }
 .nav-link{
     color: antiquewhite;

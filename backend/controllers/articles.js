@@ -19,10 +19,11 @@ exports.createArticles = (req, res, next) => {
                     });
                 }
             ).catch(
-                () => {
-                    res.status(400).json({
-                        error : error
-                    });  
+                (error) => {
+
+                        res.status(400).json({
+                            error : error
+                    });
                 }
             );
         }else{

@@ -6,6 +6,7 @@ const MIME_TYPES = {
 };
 
 
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'images');
@@ -17,4 +18,4 @@ const storage = multer.diskStorage({
     }
   });
   
-module.exports = multer({ storage: storage }).single('file');
+module.exports = multer({ storage: storage, limits: {fileSize: 5000000} }).single('file');

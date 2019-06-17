@@ -18,7 +18,8 @@ export const store = new Vuex.Store({
             "UI-UX"
         ],
         articles : [],
-        department : ''
+        department : '',
+        unReadPosts : '',
     },
 
     getters:{
@@ -37,14 +38,17 @@ export const store = new Vuex.Store({
         getDepartments: state => {
             return state.departments;
         },
-        getArticles: state => {
-            return state.articles;
+        getArticlesByDepartment: (state) => (department) => {
+            return state.articles.filter(article => article.department === department);           
         },
         getDepartment : state => {
             return state.department;
         },
         getToken : state => {
             return state.token;
+        },
+        getUnReadPosts : state => {
+            return state.unReadPosts;
         }
     },
     
@@ -70,9 +74,13 @@ export const store = new Vuex.Store({
         },
         setArticles(state, articles){
             state.articles = articles;
-            
+        },
+        setNewArticle(state, articles){
+            state.articles.push(articles);
+        },
+        setUnReadPosts(state, unReadPosts){
+            state.unReadPosts = unReadPosts;
         }
-
     },
     actions:{
         async registerUser({commit}, datas) {
@@ -136,27 +144,20 @@ export const store = new Vuex.Store({
             formData.append('file', datas.file);
             try {
                 await Axios.post('http://localhost:3000/api/articles', formData);
-                commit('setArticles', formData);
+                commit('setNewArticle', formData);
             } catch (error) {
                 console.log(error);
             }
         },
-        async getArticles({commit}, depart){
-            
+        async getArticles({commit}){            
             Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;
             try{
                 const response = await Axios.get('http://localhost:3000/api/articles');
                 const articles = await response.data;
-                const art = [];
-                articles.forEach(article => {               
-                        if(article.department === depart){ 
-
-                            art.push(article);
-                            commit('setArticles', art);  
-                            console.log(art);
-                        }  
-                })
-
+                /* const unReadPosts = await response.data.length; */
+                commit('setArticles', articles);
+                /* commit('setUnReadPosts', unReadPosts); */
+                
             }catch(error){
                 console.log(error);  
             }
