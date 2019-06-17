@@ -39,8 +39,12 @@ export const store = new Vuex.Store({
             return state.departments;
         },
         getArticlesByDepartment: (state) => (department) => {
-            return state.articles.filter(article => article.department === department);           
+            return state.articles
+            .filter(article => article.department === department)
+            .sort((a,b) => new Date(a.created) - new Date(b.created))   
+            .reverse()                            
         },
+
         getDepartment : state => {
             return state.department;
         },
