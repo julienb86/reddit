@@ -44,13 +44,13 @@ export default {
     },
     computed : {
         ...mapGetters([
-            'getArticlesByDepartment'
+            'getArticlesByDepartment',
         ]),
         allArticles(){
             return this.getArticlesByDepartment("Marketing");
         },
         ...mapState([
-            'articles'
+            'articles',
         ])
 
     },

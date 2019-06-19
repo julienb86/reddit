@@ -19,15 +19,18 @@ const router = new Router({
     routes :  [
         {
             path: '/',
+            name : 'home',
             component : Home
         },
         {
             path: '/homepage',
+            name : 'homepage',
             component : Homepage,
 
         children: [
             {
               path: 'profile',
+              name : 'profile',
               component: Profile
             },
             {
@@ -36,18 +39,22 @@ const router = new Router({
                 children : [
                     { */
                         path: 'marketing',
+                        name : 'marketing',
                         component: Marketing
                       },
                       {
                         path: 'HR',
+                        name : 'HR',
                         component: HR
                       },
                       {
                         path: 'development',
+                        name : 'development',
                         component: Development
                       },
                       {
                         path: 'UI-UX',
+                        name : 'UiUx',
                         component: UiUx
                       },
 /*                 ]

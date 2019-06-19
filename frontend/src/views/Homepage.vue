@@ -24,6 +24,7 @@
 import Navbar from '../components/Navbar'
 import Departments from '../components/Departments'
 export default {
+
     components:{
         Navbar,
         Departments,

@@ -18,8 +18,8 @@ export const store = new Vuex.Store({
             "UI-UX"
         ],
         articles : [],
-        department : '',
-        unReadPosts : '',
+        unReadPosts : false,
+        department : ''
     },
 
     getters:{
@@ -41,18 +41,17 @@ export const store = new Vuex.Store({
         getArticlesByDepartment: (state) => (department) => {
             return state.articles
             .filter(article => article.department === department)
-            .sort((a,b) => new Date(a.created) - new Date(b.created))   
-            .reverse()                            
-        },
-
-        getDepartment : state => {
-            return state.department;
+            .sort((a,b) => new Date(b.created) - new Date(a.created));
+                               
         },
         getToken : state => {
             return state.token;
         },
         getUnReadPosts : state => {
             return state.unReadPosts;
+        },
+        getDepartment: state => {
+            return state.department;
         }
     },
     
@@ -83,7 +82,16 @@ export const store = new Vuex.Store({
             state.articles.push(articles);
         },
         setUnReadPosts(state, unReadPosts){
+            /* state.unReadPosts.push(unReadPosts); */
             state.unReadPosts = unReadPosts;
+
+            
+            unReadPosts === true;
+        },
+        setDepartment(state, department){
+            state.department = department.get('department');
+            console.log(state.department);
+            
         }
     },
     actions:{
@@ -149,6 +157,8 @@ export const store = new Vuex.Store({
             try {
                 await Axios.post('http://localhost:3000/api/articles', formData);
                 commit('setNewArticle', formData);
+                commit('setUnReadPosts', formData);
+                commit('setDepartment', formData);
             } catch (error) {
                 console.log(error);
             }
