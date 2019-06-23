@@ -35,7 +35,7 @@ export default {
         Article
     },
     mounted() {
-        this.$store.dispatch('getArticles');        
+        this.$store.dispatch('getArticles');       
     },
     data(){
         return{

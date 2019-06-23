@@ -18,7 +18,7 @@ export const store = new Vuex.Store({
             "UI-UX"
         ],
         articles : [],
-        unReadPosts : [],
+        unReadPosts : false,
         department : []
     },
 
@@ -47,16 +47,10 @@ export const store = new Vuex.Store({
             return state.token;
         },
         getUnReadPosts : state => {
-            if(state.department.length > 0){
-                return state.unReadPosts;
-            }
+            return state.unReadPosts;
         },
-        getDepartment: state => {
-            console.log(state.department);
+        getDepartment : state => {
             return state.department;
-            
-            
-            /* return state.unReadPosts.get('department'); */
         }
     },
     
@@ -86,12 +80,12 @@ export const store = new Vuex.Store({
         setNewArticle(state, articles){
             state.articles.push(articles);
         },
-        setUnReadPosts(state, unReadPosts){
-            state.unReadPosts.push(unReadPosts);
-/*             state.unReadPosts = unReadPosts; */
+        setUnReadPosts(state, department){
+            state.unReadPosts = true;
+            state.department.push(department);
         },
         setDepartment(state, department){
-            state.department.push(department.get('department')); 
+            
         }
     },
     actions:{
@@ -113,7 +107,7 @@ export const store = new Vuex.Store({
                     commit('auth_success', {token, user});
                 }
                 catch(error){
-                    error.response.data.message = "Email already used!";
+                    
                 throw error;                 
             }  
         },
@@ -131,7 +125,6 @@ export const store = new Vuex.Store({
                     commit('auth_success', {user, token});
                 }
                 catch (error){
-                    error.response.data.message = "Email and password do not match!"
                     throw error;                        
             }  
         },
@@ -159,7 +152,6 @@ export const store = new Vuex.Store({
                 await Axios.post('http://localhost:3000/api/articles', formData);
                 commit('setNewArticle', formData);
                 commit('setUnReadPosts', formData);
-                commit('setDepartment', formData);
             } catch (error) {
                 console.log(error);
             }

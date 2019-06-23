@@ -8,6 +8,7 @@ exports.createArticles = (req, res, next) => {
         const articles = new Articles({
             userId : req.body.userId,
             department : req.body.department,
+            name : req.body.name,
             content : req.body.content,
             imageUrl: url + "/images/" + req.file.filename,
             created : new Date()
