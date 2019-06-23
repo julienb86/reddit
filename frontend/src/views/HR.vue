@@ -76,11 +76,11 @@ export default {
             try {
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
+                name : this.$store.state.user.name,
                 department : this.$store.state.departments[1],
                 content : this.content,
                 file : this.file
             }); 
-            console.log(response);
             /* this.getArticles(); */
             this.$store.dispatch('getArticles'); 
             this.content = '';

@@ -34,6 +34,7 @@ export default {
             try {
                 await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
+                name : this.$store.state.name,
                 department : this.$store.state.user.department,
                 content : this.content,
                 imageUrl : this.imageUrl

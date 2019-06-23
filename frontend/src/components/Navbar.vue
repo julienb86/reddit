@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Hey {{  user }}</a>
+          <router-link class="nav-link" to="Profile">Hey {{ user }}</router-link>
         </li>
         <li class="nav-item">
           <a @click="logout()" class="nav-link" href="#">Logout</a>

@@ -29,6 +29,7 @@ exports.createArticles = (req, res, next) => {
         }else{
             const articles = new Articles({
                 userId : req.body.userId,
+                name : req.body.name,
                 department : req.body.department,
                 content : req.body.content,
                 created : new Date()

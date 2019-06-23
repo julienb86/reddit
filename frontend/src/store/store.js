@@ -18,8 +18,8 @@ export const store = new Vuex.Store({
             "UI-UX"
         ],
         articles : [],
-        unReadPosts : false,
-        department : ''
+        unReadPosts : [],
+        department : []
     },
 
     getters:{
@@ -41,17 +41,22 @@ export const store = new Vuex.Store({
         getArticlesByDepartment: (state) => (department) => {
             return state.articles
             .filter(article => article.department === department)
-            .sort((a,b) => new Date(b.created) - new Date(a.created));
-                               
+            .sort((a,b) => new Date(b.created) - new Date(a.created));                   
         },
         getToken : state => {
             return state.token;
         },
         getUnReadPosts : state => {
-            return state.unReadPosts;
+            if(state.department.length > 0){
+                return state.unReadPosts;
+            }
         },
         getDepartment: state => {
+            console.log(state.department);
             return state.department;
+            
+            
+            /* return state.unReadPosts.get('department'); */
         }
     },
     
@@ -82,16 +87,11 @@ export const store = new Vuex.Store({
             state.articles.push(articles);
         },
         setUnReadPosts(state, unReadPosts){
-            /* state.unReadPosts.push(unReadPosts); */
-            state.unReadPosts = unReadPosts;
-
-            
-            unReadPosts === true;
+            state.unReadPosts.push(unReadPosts);
+/*             state.unReadPosts = unReadPosts; */
         },
         setDepartment(state, department){
-            state.department = department.get('department');
-            console.log(state.department);
-            
+            state.department.push(department.get('department')); 
         }
     },
     actions:{
@@ -151,6 +151,7 @@ export const store = new Vuex.Store({
             Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;
             const formData = new FormData();
             formData.append('userId', datas.userId);
+            formData.append('name', datas.name);
             formData.append('department', datas.department);
             formData.append('content', datas.content);
             formData.append('file', datas.file);
@@ -178,5 +179,3 @@ export const store = new Vuex.Store({
         },
     }
 });
-
-

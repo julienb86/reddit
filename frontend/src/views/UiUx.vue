@@ -63,6 +63,7 @@ export default {
             try {
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
+                name : this.$store.state.user.name,
                 department : this.$store.state.departments[3],
                 content : this.content,
                 file : this.file

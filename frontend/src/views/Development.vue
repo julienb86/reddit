@@ -12,6 +12,8 @@
             </div>
         </form>
 
+        <h2 class="text-center">Development Department</h2>
+
 
         <div class="row">
             <div class="col-md-10 col-xm-8" v-for="article in allArticles" :key="article.id">
@@ -54,6 +56,7 @@ export default {
         ])
 
     },
+
     methods : {
         getFile(){
             this.file = this.$refs.file.files[0];
@@ -63,6 +66,7 @@ export default {
             try {
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
+                name : this.$store.state.user.name,
                 department : this.$store.state.departments[2],
                 content : this.content,
                 file : this.file

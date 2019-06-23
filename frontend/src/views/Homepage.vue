@@ -1,8 +1,8 @@
 <template>
 <div class="container-fluid">
-    <div class="row">
+<!--     <div class="row">
         <Navbar/>
-    </div>
+    </div> -->
     
 
 <div class="row">

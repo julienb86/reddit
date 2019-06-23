@@ -5,7 +5,7 @@
             {{article.content}}
         </div>
         <div class="card-footer">
-            <p>Posted by {{ article.userId }}, {{ article.created }}</p>
+            <p class="float-right">Posted by {{ article.name }}</p>
         </div>
     </div>
 </template>
@@ -16,3 +16,4 @@ export default {
     props : ['article']
 }
 </script>
+

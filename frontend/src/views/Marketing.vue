@@ -11,6 +11,7 @@
                 </div>
             </div>
         </form>
+        <h2 class="text-center">Marketing Department</h2>
 
 
         <div class="row">
@@ -63,6 +64,7 @@ export default {
             try {
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
+                name : this.$store.state.user.name,
                 department : this.$store.state.departments[0],
                 content : this.content,
                 file : this.file
