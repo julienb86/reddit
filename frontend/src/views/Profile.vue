@@ -8,7 +8,7 @@
                 </div>
                 <h3 class="text-center">Department : <span>{{ getUserDepartment }}</span></h3>
                 <h3 class="text-center">Email : <span>{{ getUserEmail }}</span></h3>
-                <h3 class="text-center" v-if="getUserBirthday">Birthday : <span >{{ getUserBirthday }}</span></h3>
+                <h3 class="text-center" v-if="getUserBirthday">Birthday : <span >{{ getUserBirthday |  moment("YYYY/MM/DD")  }}</span></h3>
             </form>
             <div class="form-group text-center">
                 <button @click="deleteAccount()" class="btn btn-danger">Delete Account</button>                    
@@ -23,7 +23,9 @@
 import Axios from 'axios';
 import Datepicker from 'vuejs-datepicker';
 import {mapGetters} from 'vuex';
+
 export default {
+
       components: {
         Datepicker,
 

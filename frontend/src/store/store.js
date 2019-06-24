@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import Axios from 'axios';
 
 
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -30,7 +31,7 @@ export const store = new Vuex.Store({
             return state.user.department;
         },
         getUserBirthday: state => {
-            return state.user.birthday;
+            return state.user.birthday;            
         },
         getUserEmail : state => {
             return state.user.email;

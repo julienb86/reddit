@@ -45,7 +45,6 @@ export default {
                     field : 'password',
                     msg : "Email and password do not match!"
                 });
-
             }
         }
     },

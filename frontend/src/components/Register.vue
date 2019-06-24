@@ -39,7 +39,7 @@
 import Datepicker from 'vuejs-datepicker';
 import Axios from 'axios';
 import { mapGetters } from 'vuex';
-import {ErrorBag} from 'vee-validate'
+
 
 
 

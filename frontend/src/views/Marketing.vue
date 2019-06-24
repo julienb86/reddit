@@ -5,12 +5,17 @@
         <form @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
             <div class="form-group p-5">
                 <textarea v-model="content" class="form-control" rows="3"></textarea>
+                    
+
                 <div class="row p-2 d-flex">
-                    <input @change="getFile" type="file" ref="file" class="form-control-file" >
+                    <input  @change="getFile" type="file" ref="file" class="form-control-file" />
                     <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    <span  v-if="fileSize" class="text-danger">{{message}}</span>
                 </div>
+                
             </div>
         </form>
+        
         <h2 class="text-center">Marketing Department</h2>
 
 
@@ -40,7 +45,9 @@ export default {
     data(){
         return{
             content : '',
-            file : ''
+            file : null,
+            fileSize : 5,
+            message : ''
         }
     },
     computed : {
@@ -56,8 +63,22 @@ export default {
 
     },
     methods : {
-        getFile(){
-            this.file = this.$refs.file.files[0];
+        getFile(){   
+            /* this.file = this.$refs.file.files[0]; */
+            let fileItem = this.$refs.file.files[0];
+            if(fileItem){
+                if(fileItem.size/1024/1024 > this.fileSize){
+                    console.log("too big");
+                    this.message = "Your file is too big"
+                    return false;
+                    
+                }else{
+                    this.file = fileItem;
+                    this.message = "Your file is ok"
+                }
+                
+            }
+         
         },
 
         async postArticle(){
@@ -71,7 +92,8 @@ export default {
             }); 
             this.$store.dispatch('getArticles'); 
             this.content = '';
-            this.file = null;
+            this.file = '';
+            this.message = '';
             } catch (error) {
                 console.log(error);
             }
