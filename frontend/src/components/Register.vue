@@ -54,8 +54,7 @@ export default {
                 department : '',
                 birthday: '',
                 password: '',
-                submitted : false,
-                error: ''
+                submitted : false
             }
         },
     methods:{
@@ -70,6 +69,8 @@ export default {
             });
             this.$router.push('/homepage/profile');  
         } catch (error) {
+            console.log(error);
+            
             this.errors.add({
                 field : 'email',
                 msg : "Email already exists"

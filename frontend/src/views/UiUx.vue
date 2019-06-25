@@ -5,12 +5,18 @@
         <form @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
             <div class="form-group p-5">
                 <textarea v-model="content" class="form-control" rows="3"></textarea>
+                    
+
                 <div class="row p-2 d-flex">
-                    <input @change="getFile" type="file" ref="file" class="form-control-file" >
-                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
-                </div>
+                    <input v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" />
+                    <button type="submit" class="btn btn-primary mb-2">Submit</button> 
+                    <span  v-show="errors.has('size_field')" class="text-danger">{{ errors.first('size_field')}}</span>
+              </div>
+                
             </div>
         </form>
+        
+        <h2 class="text-center">UI-UX Department</h2>
 
 
         <div class="row">
@@ -34,43 +40,69 @@ export default {
         Article
     },
     mounted() {
-        this.$store.dispatch('getArticles');        
+        this.$store.dispatch('getArticles');       
     },
     data(){
         return{
             content : '',
-            file : ''
+            file : null,
+            fileSize : 5*1024*1024,
+            message : ''
         }
     },
     computed : {
         ...mapGetters([
-            'getArticlesByDepartment'
+            'getArticlesByDepartment',
         ]),
         allArticles(){
             return this.getArticlesByDepartment("UI-UX");
         },
         ...mapState([
-            'articles'
+            'articles',
         ])
 
     },
     methods : {
-        getFile(){
-            this.file = this.$refs.file.files[0];
-        },
 
         async postArticle(){
             try {
+                this.file = this.$refs.file.files[0];
+                if(this.file){
+                
+                    if(this.file.size < this.fileSize){
+                        console.log(this.file.size);
+                        console.log(this.fileSize);
+                        
+                        
+                        const response = await this.$store.dispatch('postArticle', {
+                        userId : this.$store.state.user._id,
+                        name : this.$store.state.user.name,
+                        department : this.$store.state.departments[0],
+                        content : this.content,
+                        file : this.file
+                        });
+                
+            this.$store.dispatch('getArticles'); 
+            this.content = '';
+            this.file = '';
+                }
+
+            }else if(this.content){
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
                 name : this.$store.state.user.name,
-                department : this.$store.state.departments[3],
+                department : this.$store.state.departments[0],
                 content : this.content,
-                file : this.file
-            }); 
+                });
             this.$store.dispatch('getArticles'); 
             this.content = '';
-            this.file = null;
+
+            }else{
+                this.errors.add({
+                field : 'size_field',
+                msg : 'A text or an image is required'
+            })
+            }
             } catch (error) {
                 console.log(error);
             }

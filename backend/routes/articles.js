@@ -6,8 +6,8 @@ const multer = require('../middleware/multer-config');
 
 
 /* add auth below */
-router.get('/', articlesCtrl.getAllArticles);
-router.post('/', multer,articlesCtrl.createArticles);
+router.get('/',articlesCtrl.getAllArticles);
+router.post('/', multer, articlesCtrl.createArticles);
 router.get('/:id', articlesCtrl.getOneArticle);
 
 module.exports = router;

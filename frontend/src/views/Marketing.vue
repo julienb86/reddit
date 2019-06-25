@@ -8,10 +8,10 @@
                     
 
                 <div class="row p-2 d-flex">
-                    <input  @change="getFile" type="file" ref="file" class="form-control-file" />
-                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
-                    <span  v-if="fileSize" class="text-danger">{{message}}</span>
-                </div>
+                    <input v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" />
+                    <button type="submit" class="btn btn-primary mb-2">Submit</button> 
+                    <span  v-show="errors.has('size_field')" class="text-danger">{{ errors.first('size_field')}}</span>
+              </div>
                 
             </div>
         </form>
@@ -46,7 +46,7 @@ export default {
         return{
             content : '',
             file : null,
-            fileSize : 5,
+            fileSize : 5*1024*1024,
             message : ''
         }
     },
@@ -63,37 +63,46 @@ export default {
 
     },
     methods : {
-        getFile(){   
-            /* this.file = this.$refs.file.files[0]; */
-            let fileItem = this.$refs.file.files[0];
-            if(fileItem){
-                if(fileItem.size/1024/1024 > this.fileSize){
-                    console.log("too big");
-                    this.message = "Your file is too big"
-                    return false;
-                    
-                }else{
-                    this.file = fileItem;
-                    this.message = "Your file is ok"
-                }
-                
-            }
-         
-        },
 
         async postArticle(){
             try {
+                this.file = this.$refs.file.files[0];
+                if(this.file){
+                
+                    if(this.file.size < this.fileSize){
+                        console.log(this.file.size);
+                        console.log(this.fileSize);
+                        
+                        
+                        const response = await this.$store.dispatch('postArticle', {
+                        userId : this.$store.state.user._id,
+                        name : this.$store.state.user.name,
+                        department : this.$store.state.departments[0],
+                        content : this.content,
+                        file : this.file
+                        });
+                
+            this.$store.dispatch('getArticles'); 
+            this.content = '';
+            this.file = '';
+                }
+
+            }else if(this.content){
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
                 name : this.$store.state.user.name,
                 department : this.$store.state.departments[0],
                 content : this.content,
-                file : this.file
-            }); 
+                });
             this.$store.dispatch('getArticles'); 
             this.content = '';
-            this.file = '';
-            this.message = '';
+
+            }else{
+                this.errors.add({
+                field : 'size_field',
+                msg : 'A text or an image is required'
+            })
+            }
             } catch (error) {
                 console.log(error);
             }
