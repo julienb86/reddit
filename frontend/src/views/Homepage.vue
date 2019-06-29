@@ -1,12 +1,12 @@
 <template>
 <div class="container-fluid">
     <div class="row">
-        <Navbar/>
+        <Navbar />
     </div>
     
 
 <div class="row">
-    <Departments/>
+    <Departments />
 
     <router-view>
         <!-- links from Navbar -->
@@ -23,7 +23,9 @@
 <script>
 import Navbar from '../components/Navbar'
 import Departments from '../components/Departments'
+import {mapGetters, mapState} from 'vuex'
 export default {
+
 
     components:{
         Navbar,
@@ -42,4 +44,5 @@ export default {
   margin: 0;
   padding: 0;
 }
+
 </style>

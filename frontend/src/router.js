@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Profile from './views/Profile'
-import Articles from './views/Articles'
 import Home from './views/Home'
 import Homepage from './views/Homepage'
 import Marketing from './views/Marketing'

@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import Axios from "axios";
 import Article from "../components/Article";
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
@@ -46,8 +45,7 @@ export default {
         return{
             content : '',
             file : null,
-            fileSize : 5*1024*1024,
-            message : ''
+            fileSize : 5*1024*1024
         }
     },
     computed : {
@@ -77,25 +75,26 @@ export default {
                         const response = await this.$store.dispatch('postArticle', {
                         userId : this.$store.state.user._id,
                         name : this.$store.state.user.name,
-                        department : this.$store.state.departments[0],
+                        department : this.$store.state.departments[2],
                         content : this.content,
                         file : this.file
                         });
                 
             this.$store.dispatch('getArticles'); 
             this.content = '';
-            this.file = '';
+            this.$refs.file.value = ''; 
                 }
 
             }else if(this.content){
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
                 name : this.$store.state.user.name,
-                department : this.$store.state.departments[0],
+                department : this.$store.state.departments[2],
                 content : this.content,
                 });
             this.$store.dispatch('getArticles'); 
             this.content = '';
+            this.$refs.file.value = ''; 
 
             }else{
                 this.errors.add({

@@ -42,7 +42,6 @@ import { mapGetters } from 'vuex';
 
 
 
-
 export default {
     components:{
         Datepicker

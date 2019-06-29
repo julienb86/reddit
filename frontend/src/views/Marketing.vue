@@ -8,8 +8,8 @@
                     
 
                 <div class="row p-2 d-flex">
-                    <input v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" />
-                    <button type="submit" class="btn btn-primary mb-2">Submit</button> 
+                    <input  v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file col-md-2" />
+                    <button type="submit" class="btn btn-primary mb-2 col-md-2">Submit</button> 
                     <span  v-show="errors.has('size_field')" class="text-danger">{{ errors.first('size_field')}}</span>
               </div>
                 
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import Axios from "axios";
 import Article from "../components/Article";
 import { mapState } from 'vuex';
 import { mapGetters } from 'vuex';
@@ -46,8 +45,7 @@ export default {
         return{
             content : '',
             file : null,
-            fileSize : 5*1024*1024,
-            message : ''
+            fileSize : 5*1024*1024
         }
     },
     computed : {
@@ -84,7 +82,7 @@ export default {
                 
             this.$store.dispatch('getArticles'); 
             this.content = '';
-            this.file = '';
+            this.$refs.file.value = ''; 
                 }
 
             }else if(this.content){
@@ -96,7 +94,7 @@ export default {
                 });
             this.$store.dispatch('getArticles'); 
             this.content = '';
-
+            this.$refs.file.value = ''; 
             }else{
                 this.errors.add({
                 field : 'size_field',

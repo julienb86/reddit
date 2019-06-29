@@ -1,11 +1,18 @@
 <template>
   <nav class="col-12 navbar navbar-expand-lg">
-    <router-link to="/" class="navbar-brand"><img src="../assets/navigation-icon.png" alt="navigation-icon" height="75px" width="75px"></router-link>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
     </button>
+ 
+    <img src="../assets/navigation-icon.png" alt="navigation-icon" height="75px" width="75px" class="d-none d-sm-block">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto d-block d-sm-none">
+        <li class="nav-item">
+          <a @click="logout()" class="nav-link" href="#">Log out</a>
+        </li>
+      </ul>
+
+    <div class="collapse navbar-collapse" >
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link class="nav-link" to="Profile">Hey {{ user }}</router-link>
@@ -19,7 +26,6 @@
 </template>
 
 <script>
-
 export default {
   computed:{
     user(){
@@ -44,9 +50,14 @@ export default {
                 this.$swal('Cancelled', 'You are still logged in', 'info')
               }
             });
+        },
+        toggle(){
+          $("#wrapper").show();
         }
   }
 }
+
+
 </script>
 
 
@@ -63,4 +74,6 @@ export default {
     color: antiquewhite;
     font-size: 1.2em;
 }
+
+
 </style>

@@ -1,30 +1,20 @@
 <template>
 
-        <div class="col-md-2 col-xm-4 left" id="navbarSupportedContent">
-<!--             <div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div> -->
-            <div class="text-center p-10">
+        <div class="col-md-2 col-12 left" id="navbarSupportedContent">
+<!--             <div class="text-center p-10">
                 <img class="groupomania-icon" src="../assets/main-screen-icon.png" alt="navigation-icon" height="75px" width="75px">
             </div>
+ -->
 
-            <ul class="col-12" >
+            <router-link to="Profile" class="nav-link d-block d-md-none float-right">Hey {{ user }}</router-link>
+
+            <ul class="col-12">
                 <li v-for="depart of getDepartments" :key="depart.id">
-                    <i v-if="getUnReadPosts && depart === dep " class="fas fa-circle p-2 unread-icon" ></i>
+                    <i v-if="unread(depart) &&  checkId() != getUserId" class="fas fa-circle p-2 unread-icon" ></i>
                     <!-- <i v-else class="far fa-circle p-2 icon"></i>  -->                   
                     <router-link class="links" :to="`${depart}`">{{ depart }}</router-link>
 <!--                     <br><span v-if="getUnReadPosts && depart === getDepartment">You have {{ getUnReadPosts }} notification</span>
- -->                </li>
-            </ul>
-            <ul class="col-12">
-                <li class="nav-item">
-                    <router-link to="Profile">Hey {{ user }}</router-link>
-                </li>
-                <li class="nav-item">
-                    <a @click="logout()" href="#">Logout</a>
-                </li>
+ -->            </li>
             </ul>
         </div>
 </template>
@@ -38,21 +28,14 @@ export default {
         ...mapGetters([
             'getDepartments',
             'getUnReadPosts',
-            'getDepartment'
+            'getDepartment',
+            'getPostUser',
+            'getUserId'
         ]),
-        dep(){
-            this.getDepartment.forEach(dep =>{
-                let newDeps = dep.getAll('department');
-                newDeps.forEach( newDep => {
-                    return newDep;
-                    
-                })
-                
-            })
-        },
         user(){
             return this.$store.state.user.name;        
-        }
+        },
+        
 
     },
         methods :{
@@ -73,8 +56,20 @@ export default {
                 this.$swal('Cancelled', 'You are still logged in', 'info')
               }
             });
+        },
+        unread(departs){
+            for(let dep of this.getDepartment){
+                if(departs === dep){                   
+                    return true;
+                } 
+            }
+        },
+        checkId(){
+            for (let id of this.getPostUser){
+                return id;
+            }
         }
-  }
+    }
 }
 </script>
 
@@ -84,7 +79,8 @@ export default {
 }
 .left{
     background-color:#EAE8E6;
-    height: 100vh;
+    max-height: 100vh;
+    z-index: 1;
     position: sticky;
     top: 0;
 }
@@ -108,5 +104,6 @@ export default {
     color: antiquewhite;
     font-size: 1.2em;
 }
+
 
 </style>

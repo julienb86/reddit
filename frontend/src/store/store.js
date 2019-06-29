@@ -19,13 +19,18 @@ export const store = new Vuex.Store({
             "UI-UX"
         ],
         articles : [],
-        unReadPosts : false,
-        department : []
+        department :  [],
+        postUser : []
     },
 
     getters:{
         getUser: (state) => {
             return state.user.name;
+        },
+        getUserId : state => {
+            console.log(state.user._id);
+            
+            return state.user._id;
         },
         getUserDepartment : state => {
             return state.user.department;
@@ -47,13 +52,13 @@ export const store = new Vuex.Store({
         getToken : state => {
             return state.token;
         },
-        getUnReadPosts : state => {
-            return state.unReadPosts;
-        },
         getDepartment : state => {
             return state.department;
-        }
-    },
+            },
+        getPostUser : state => {
+            return state.postUser;
+            }
+        },
     
     mutations:{
         auth_success(state, {token, user}){
@@ -78,16 +83,23 @@ export const store = new Vuex.Store({
         setArticles(state, articles){
             state.articles = articles;
         },
-        setNewArticle(state, articles){
-            state.articles.push(articles);
-        },
-        setUnReadPosts(state, department){
-            state.unReadPosts = true;
-            state.department.push(department);
-        },
+/*         setUnReadPosts(state, post){
+            state.unReadPosts.push(post);
+        }, */
         setDepartment(state, department){
-            
-        }
+           department.filter(dep => {
+               if(!state.department.includes(dep.department)){
+                state.department.push(dep.department);
+               }
+            })     
+        },
+        setId(state, postUser){
+            postUser.filter(user => {
+                if(!state.department.includes(user.userId)){
+                 state.postUser.push(user.userId);
+                }
+             })   
+         }  
     },
     actions:{
         async registerUser({commit}, datas) {
@@ -151,8 +163,7 @@ export const store = new Vuex.Store({
             formData.append('file', datas.file);
             try {
                 await Axios.post('http://localhost:3000/api/articles', formData);
-                commit('setNewArticle', formData);
-                commit('setUnReadPosts', formData);
+/*                 commit('setArticles', formData); */
             } catch (error) {
                 console.log(error);
             }
@@ -162,10 +173,11 @@ export const store = new Vuex.Store({
             try{
                 const response = await Axios.get('http://localhost:3000/api/articles');
                 const articles = await response.data;
+                console.log(articles);
                 /* const unReadPosts = await response.data.length; */
                 commit('setArticles', articles);
-                /* commit('setUnReadPosts', unReadPosts); */
-                
+                commit('setDepartment', articles);
+                commit('setId', articles);
             }catch(error){
                 console.log(error);  
             }
