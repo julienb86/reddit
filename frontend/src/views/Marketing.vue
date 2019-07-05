@@ -77,7 +77,7 @@ export default {
                         name : this.$store.state.user.name,
                         department : this.$store.state.departments[0],
                         content : this.content,
-                        file : this.file
+                        file : this.file,
                         });
                 
             this.$store.dispatch('getArticles'); 
@@ -91,6 +91,7 @@ export default {
                 name : this.$store.state.user.name,
                 department : this.$store.state.departments[0],
                 content : this.content,
+                read : this.read
                 });
             this.$store.dispatch('getArticles'); 
             this.content = '';

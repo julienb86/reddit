@@ -6,7 +6,8 @@ const articlesSchema = mongoose.Schema({
     department: {type: String, required: true},
     content: {type: String, required: false},
     imageUrl: {type : String, required: false},
-    created : {type : Date, required: true}
+    created : {type : Date, required: true},
+    read : {type : Boolean, default : false}
 
 });
 

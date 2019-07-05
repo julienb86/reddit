@@ -11,7 +11,6 @@ export const store = new Vuex.Store({
     state: {
         token : localStorage.getItem('token') || null,
         user : JSON.parse(localStorage.getItem('user')) || '',
-/*         isUserLoggedIn : false, */
         departments : [
             "Marketing",
             "HR",
@@ -20,7 +19,7 @@ export const store = new Vuex.Store({
         ],
         articles : [],
         department :  [],
-        postUser : []
+        unRead : false
     },
 
     getters:{
@@ -83,23 +82,11 @@ export const store = new Vuex.Store({
         setArticles(state, articles){
             state.articles = articles;
         },
-/*         setUnReadPosts(state, post){
-            state.unReadPosts.push(post);
-        }, */
         setDepartment(state, department){
-           department.filter(dep => {
-               if(!state.department.includes(dep.department)){
-                state.department.push(dep.department);
-               }
-            })     
-        },
-        setId(state, postUser){
-            postUser.filter(user => {
-                if(!state.department.includes(user.userId)){
-                 state.postUser.push(user.userId);
-                }
-             })   
-         }  
+            department.forEach(dep => {
+                state.department.push({depart : dep.department,id:  dep.userId})
+            });
+        }
     },
     actions:{
         async registerUser({commit}, datas) {
@@ -163,7 +150,6 @@ export const store = new Vuex.Store({
             formData.append('file', datas.file);
             try {
                 await Axios.post('http://localhost:3000/api/articles', formData);
-/*                 commit('setArticles', formData); */
             } catch (error) {
                 console.log(error);
             }
@@ -173,8 +159,6 @@ export const store = new Vuex.Store({
             try{
                 const response = await Axios.get('http://localhost:3000/api/articles');
                 const articles = await response.data;
-                console.log(articles);
-                /* const unReadPosts = await response.data.length; */
                 commit('setArticles', articles);
                 commit('setDepartment', articles);
                 commit('setId', articles);

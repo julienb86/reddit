@@ -10,7 +10,7 @@
 
             <ul class="col-12">
                 <li v-for="depart of getDepartments" :key="depart.id">
-                    <i v-if="unread(depart) &&  checkId() != getUserId" class="fas fa-circle p-2 unread-icon" ></i>
+                    <i v-if="unread(depart)" class="fas fa-circle p-2 unread-icon" ></i>
                     <!-- <i v-else class="far fa-circle p-2 icon"></i>  -->                   
                     <router-link class="links" :to="`${depart}`">{{ depart }}</router-link>
 <!--                     <br><span v-if="getUnReadPosts && depart === getDepartment">You have {{ getUnReadPosts }} notification</span>
@@ -22,7 +22,6 @@
 <script>
 import {mapGetters, mapState} from 'vuex';
 import Axios from 'axios';
-
 export default {
         computed : {
         ...mapGetters([
@@ -36,7 +35,6 @@ export default {
             return this.$store.state.user.name;        
         },
         
-
     },
         methods :{
         logout(){
@@ -59,16 +57,11 @@ export default {
         },
         unread(departs){
             for(let dep of this.getDepartment){
-                if(departs === dep){                   
+                if(departs === dep.depart && dep.id != this.getUserId){                   
                     return true;
                 } 
             }
         },
-        checkId(){
-            for (let id of this.getPostUser){
-                return id;
-            }
-        }
     }
 }
 </script>
@@ -104,6 +97,4 @@ export default {
     color: antiquewhite;
     font-size: 1.2em;
 }
-
-
 </style>
