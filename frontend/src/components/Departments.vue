@@ -6,11 +6,11 @@
             </div>
  -->
 
-            <router-link to="Profile" class="nav-link d-block d-md-none float-right">Hey {{ user }}</router-link>
+            <router-link to="Profile" class="nav-link d-block d-md-none float-right">{{ user }}</router-link>
 
             <ul class="col-12">
-                <li v-for="depart of getDepartments" :key="depart.id">
-                    <i v-if="unread(depart)" class="fas fa-circle p-2 unread-icon" ></i>
+                <li v-for="depart of getDepartments" :key="depart.id" @click="read(depart)">
+                    <i :id="depart" v-if="unread(depart)" class='fas fa-circle p-2 unread-icon' ></i>
                     <!-- <i v-else class="far fa-circle p-2 icon"></i>  -->                   
                     <router-link class="links" :to="`${depart}`">{{ depart }}</router-link>
 <!--                     <br><span v-if="getUnReadPosts && depart === getDepartment">You have {{ getUnReadPosts }} notification</span>
@@ -20,16 +20,17 @@
 </template>
 
 <script>
-import {mapGetters, mapState} from 'vuex';
+import {mapGetters, mapState, mapActions} from 'vuex';
 import Axios from 'axios';
+
 export default {
-        computed : {
+    computed : {
         ...mapGetters([
             'getDepartments',
-            'getUnReadPosts',
             'getDepartment',
-            'getPostUser',
-            'getUserId'
+            'getUserId',
+            'getArticlesByDepartment',
+            'getArticles'
         ]),
         user(){
             return this.$store.state.user.name;        
@@ -56,13 +57,32 @@ export default {
             });
         },
         unread(departs){
-            for(let dep of this.getDepartment){
-                if(departs === dep.depart && dep.id != this.getUserId){                   
-                    return true;
-                } 
+            if(this.getDepartment != ""){
+                for(let dep of this.getDepartment){
+/*                     localStorage.setItem('read', JSON.stringify(this.getDepartment));
+ */                    if(departs === dep.depart && dep.id != this.getUserId){   
+                        return true;
+                    }
+                }
             }
         },
+        read(depart){
+            let read = document.getElementById(`${depart}`);
+            read.classList.remove('fas', 'fa-circle', 'p-2', 'unread-icon');
+            /* console.log(this.getArticlesByDepartment(`${depart}`).length); */
+            
+        },
+    },
+    watch : {
+        getArticles(newValue, oldValue){
+            console.log(oldValue, newValue);
+            if(newValue > oldValue){
+                console.log("new post");
+                
+            }
+        }
     }
+
 }
 </script>
 

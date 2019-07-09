@@ -2,8 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Axios from 'axios';
 
-
-
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -19,7 +17,7 @@ export const store = new Vuex.Store({
         ],
         articles : [],
         department :  [],
-        unRead : false
+        read : []
     },
 
     getters:{
@@ -44,9 +42,18 @@ export const store = new Vuex.Store({
             return state.departments;
         },
         getArticlesByDepartment: (state) => (department) => {
-            return state.articles
+            const articlesByDepart = state.articles
             .filter(article => article.department === department)
-            .sort((a,b) => new Date(b.created) - new Date(a.created));                   
+            .sort((a,b) => new Date(b.created) - new Date(a.created)); 
+            localStorage.setItem('read', JSON.stringify(articlesByDepart)) ;
+            return articlesByDepart;     
+        },
+        getLength : (state) => (department) => {
+            return state.articles
+            .filter(article => article.department === department ).length;
+        },
+        getArticles: (state) => {
+            return state.articles.length;
         },
         getToken : state => {
             return state.token;
@@ -54,10 +61,10 @@ export const store = new Vuex.Store({
         getDepartment : state => {
             return state.department;
             },
-        getPostUser : state => {
-            return state.postUser;
-            }
-        },
+        readPost : state => {
+            return state.read;
+        }
+    },
     
     mutations:{
         auth_success(state, {token, user}){
@@ -83,8 +90,10 @@ export const store = new Vuex.Store({
             state.articles = articles;
         },
         setDepartment(state, department){
+/*             state.department.push(department);
+            localStorage.setItem('read', department.get('userId')); */
             department.forEach(dep => {
-                state.department.push({depart : dep.department,id:  dep.userId})
+                state.department.push({depart : dep.department, id : dep.userId});
             });
         }
     },
@@ -150,6 +159,7 @@ export const store = new Vuex.Store({
             formData.append('file', datas.file);
             try {
                 await Axios.post('http://localhost:3000/api/articles', formData);
+               /*  commit('setDepartment', formData); */
             } catch (error) {
                 console.log(error);
             }
@@ -161,10 +171,11 @@ export const store = new Vuex.Store({
                 const articles = await response.data;
                 commit('setArticles', articles);
                 commit('setDepartment', articles);
-                commit('setId', articles);
             }catch(error){
                 console.log(error);  
             }
         },
+
+        
     }
 });
