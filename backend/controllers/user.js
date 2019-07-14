@@ -16,6 +16,31 @@ exports.getOneUser = (req, res, next) => {
     );
 }
 
+exports.modifyReadPost = (req, res, next)=>{
+    User.findOne({_id : req.params.id}).then(
+        (user) => {
+            if(!user.read.includes(req.body._id)){
+                user.read.push(req.body._id);
+                user.save().then(
+                    () => {
+                        res.status(201).json({
+                            message : "Id added"
+                        })
+                    }
+                ).catch(
+                    (error) => {
+                        error
+                    }
+                )
+            }else{
+                res.status(401).json({
+                    error : error
+                });
+            }
+        }
+    )
+    
+}
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)

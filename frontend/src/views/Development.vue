@@ -8,9 +8,14 @@
                     
 
                 <div class="row p-2 d-flex">
-                    <input v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" />
-                    <button type="submit" class="btn btn-primary mb-2">Submit</button> 
-                    <span  v-show="errors.has('size_field')" class="text-danger">{{ errors.first('size_field')}}</span>
+                    <input id="file" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file col-md-2" hidden/>
+                    <div>
+                        <button type="button" id="custom-btn" class="btn border" @click="$refs.file.click()">CHOOSE A FILE</button>
+                        <span>No file Choosen</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mb-2 col-md-2">Submit</button> 
+                    <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
               </div>
                 
             </div>
@@ -38,9 +43,9 @@ export default {
     components : {
         Article
     },
-    mounted() {
+/*     mounted() {
         this.$store.dispatch('getArticles');       
-    },
+    }, */
     data(){
         return{
             content : '',
@@ -109,3 +114,18 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#custom-btn {
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid black !important;
+}
+.custom-button:hover{
+    background-color: white;
+    padding: 5px;
+    border: 1px solid !important;
+    border-radius: 5px;
+}
+
+</style>

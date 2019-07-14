@@ -11,7 +11,7 @@ exports.createArticles = (req, res, next) => {
             content : req.body.content,
             imageUrl: url + "/images/" + req.file.filename,
             created : new Date(),
-            read : req.body.read
+            readBy : req.body.read
         });
             articles.save().then(
                 () => {
@@ -68,6 +68,29 @@ exports.getOneArticle = (req, res, next) => {
         }
     );
 }
+
+exports.modifyReadPost = (req, res, next)=>{
+    let articles = new Articles ({_id : req.params._id});
+    articles = {
+        read : req.body.read
+    }
+    Articles.updateOne({_id: req.params.id}, articles).then(
+        () => {
+            res.status(201).json({
+                message : "Articles successfully updated!"
+            });
+        }
+    ).catch(
+        (error) => {
+            res.status(400).json({
+                error : error
+            });
+        }
+    );
+    
+}
+
+
 exports.getAllArticles = (req, res, next) => {
     Articles.find().then(
        (article) => {

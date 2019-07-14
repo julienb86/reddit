@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const userRoutes = require('./routes/user');
 const articlesRoutes = require('./routes/articles');
+const notificationsRoutes = require('./routes/notifications');
 
 const path = require('path');
 
@@ -33,6 +34,8 @@ mongoose.connect("mongodb+srv://julien:7KyvgNH20VoZqf2G@cluster0-psxly.mongodb.n
 app.use('/api/auth', userRoutes);
 
 app.use('/api/articles', articlesRoutes);
+
+app.use('/api', notificationsRoutes);
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 

@@ -8,13 +8,13 @@
                     
 
                 <div class="row p-2 d-flex">
-                    <input id="file" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file col-md-2" hidden/>
-                    <div>
+                    <input id="file" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" hidden/>
+                    <div class=" col-md-4">
                         <button type="button" id="custom-btn" class="btn border" @click="$refs.file.click()">CHOOSE A FILE</button>
-                        <span>No file Choosen</span>
+                        <span >No file Choosen</span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary mb-2 col-md-2">Submit</button> 
+                    <button type="submit" class="btn btn-primary mb-2 offset-md-6 col-md-2">SUBMIT</button> 
                     <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
               </div>
                 
@@ -37,14 +37,11 @@
 <script>
 import Article from "../components/Article";
 import { mapState } from 'vuex';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     components : {
         Article
-    },
-    mounted() {
-        this.$store.dispatch('getArticles');       
     },
     data(){
         return{
@@ -59,6 +56,8 @@ export default {
         ]),
         allArticles(){
             return this.getArticlesByDepartment("Marketing");
+            
+            
         },
         ...mapState([
             'articles',
@@ -114,6 +113,7 @@ export default {
 
     }
 }
+
 
 
 </script>

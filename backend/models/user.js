@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
     department : {type : String, required: true},
     birthday : {type: Date},
     password : {type: String, required: true},
+    read : []
 });
 
 userSchema.plugin(uniqueValidator);

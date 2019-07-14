@@ -9,8 +9,8 @@
             <router-link to="Profile" class="nav-link d-block d-md-none float-right">{{ user }}</router-link>
 
             <ul class="col-12">
-                <li v-for="depart of getDepartments" :key="depart.id" @click="read(depart)">
-                    <i :id="depart" v-if="unread(depart)" class='fas fa-circle p-2 unread-icon' ></i>
+                <li v-for="depart of getDepartments" :key="depart.id" @click="readPosts(depart)">
+                    <i :id="depart" :class="{'fas fa-circle p-2 unread-icon' : unread(depart)} "></i>
                     <!-- <i v-else class="far fa-circle p-2 icon"></i>  -->                   
                     <router-link class="links" :to="`${depart}`">{{ depart }}</router-link>
 <!--                     <br><span v-if="getUnReadPosts && depart === getDepartment">You have {{ getUnReadPosts }} notification</span>
@@ -24,13 +24,24 @@ import {mapGetters, mapState, mapActions} from 'vuex';
 import Axios from 'axios';
 
 export default {
+    mounted(){
+        console.log("mounted");
+        /* get the length of the articles */
+
+        console.log(this.getArticles);
+        
+        
+    },
     computed : {
         ...mapGetters([
             'getDepartments',
             'getDepartment',
             'getUserId',
             'getArticlesByDepartment',
-            'getArticles'
+            'getArticles',
+            'getPosts',
+            'getReadPosts',
+            'getUserRead'
         ]),
         user(){
             return this.$store.state.user.name;        
@@ -38,6 +49,9 @@ export default {
         
     },
         methods :{
+            ...mapActions([
+                'read'
+            ]),
         logout(){
               this.$swal({
                 title: 'Are you sure?',
@@ -56,32 +70,68 @@ export default {
               }
             });
         },
-        unread(departs){
+        unread(departs){ 
+            
             if(this.getDepartment != ""){
                 for(let dep of this.getDepartment){
-/*                     localStorage.setItem('read', JSON.stringify(this.getDepartment));
- */                    if(departs === dep.depart && dep.id != this.getUserId){   
-                        return true;
-                    }
+                    for(let read of this.getUserRead){
+                        if(!read){
+                            if(departs === dep.depart && dep.userId != this.getUserId){   
+
+                                return true;
+                                
+                            }
+                        }
+                    }                  
+
+
                 }
             }
-        },
-        read(depart){
-            let read = document.getElementById(`${depart}`);
-            read.classList.remove('fas', 'fa-circle', 'p-2', 'unread-icon');
-            /* console.log(this.getArticlesByDepartment(`${depart}`).length); */
-            
-        },
     },
-    watch : {
-        getArticles(newValue, oldValue){
-            console.log(oldValue, newValue);
-            if(newValue > oldValue){
-                console.log("new post");
+ /*        reads(depart){
+
+            const readArticles = this.getArticlesByDepartment(`${depart}`);
+            for(let article of readArticles){
+                        // Get the existing data
+            var existing = JSON.parse(localStorage.getItem('read'));
+
+            // If no existing data, create an array
+            // Otherwise, convert the localStorage string to an array
+            existing = existing ? existing : [];
+
+            // Add new data to localStorage Array
+            existing.push(article._id);
+
+            // Save back to localStorage
+            localStorage.setItem('read', JSON.stringify(existing));
+
+            let read = document.getElementById(`${depart}`);
+            read.classList.add('fas', 'fa-circle', 'p-2', 'unread-icon', 'd-none');
+            }
+            
+
+                } */
+
+        async readPosts(depart){
+            try{
+                    let read = document.getElementById(`${depart}`);
+                    read.classList.add('fas', 'fa-circle', 'p-2', 'unread-icon', 'd-none');
+                for(let article of this.getArticlesByDepartment(`${depart}`)){
+                    console.log(article);
+                    
+                    await this.$store.dispatch('readPost', {
+                        read : article._id
+                    });
+
+                }
+            }catch(error){
+                console.log(error);
                 
             }
+            
         }
-    }
+ 
+    },
 
 }
 </script>
