@@ -10,8 +10,7 @@ exports.createArticles = (req, res, next) => {
             name : req.body.name,
             content : req.body.content,
             imageUrl: url + "/images/" + req.file.filename,
-            created : new Date(),
-            readBy : req.body.read
+            created : new Date()
         });
             articles.save().then(
                 () => {
@@ -33,8 +32,7 @@ exports.createArticles = (req, res, next) => {
                 name : req.body.name,
                 department : req.body.department,
                 content : req.body.content,
-                created : new Date(),
-                read : req.body.read
+                created : new Date()
         });
         articles.save().then(
             () => {

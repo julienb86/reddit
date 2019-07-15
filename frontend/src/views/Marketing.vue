@@ -25,8 +25,9 @@
 
 
         <div class="row">
+            
             <div class="col-md-10 col-xm-8" v-for="article in allArticles" :key="article.id">
-               
+              
                 <Article :article= "article" />
 
             </div>
@@ -38,7 +39,6 @@
 import Article from "../components/Article";
 import { mapState } from 'vuex';
 import { mapGetters, mapActions } from 'vuex';
-
 export default {
     components : {
         Article
@@ -62,10 +62,8 @@ export default {
         ...mapState([
             'articles',
         ])
-
     },
     methods : {
-
         async postArticle(){
             try {
                 this.file = this.$refs.file.files[0];
@@ -88,14 +86,12 @@ export default {
             this.content = '';
             this.$refs.file.value = ''; 
                 }
-
             }else if(this.content){
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
                 name : this.$store.state.user.name,
                 department : this.$store.state.departments[0],
-                content : this.content,
-                read : this.read
+                content : this.content
                 });
             this.$store.dispatch('getArticles'); 
             this.content = '';
@@ -110,12 +106,8 @@ export default {
                 console.log(error);
             }
         },
-
     }
 }
-
-
-
 </script>
 
 <style scoped>
@@ -130,5 +122,4 @@ export default {
     border: 1px solid !important;
     border-radius: 5px;
 }
-
 </style>

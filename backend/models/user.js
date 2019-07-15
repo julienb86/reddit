@@ -7,9 +7,10 @@ const userSchema = mongoose.Schema({
     department : {type : String, required: true},
     birthday : {type: Date},
     password : {type: String, required: true},
-    read : []
+    read: {type: [String], required: true}
 });
 
 userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('User', userSchema);
+

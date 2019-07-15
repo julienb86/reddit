@@ -27,9 +27,12 @@ export default {
     mounted(){
         console.log("mounted");
         /* get the length of the articles */
-
-        console.log(this.getArticles);
-        
+        console.log(this.getUser());
+        this.getDepartment;
+        this.getUser();
+/*         console.log(this.getUserRead.forEach(read => console.log(read)
+        )); */
+        this.getUserRead;
         
     },
     computed : {
@@ -41,7 +44,8 @@ export default {
             'getArticles',
             'getPosts',
             'getReadPosts',
-            'getUserRead'
+            'getUserRead',
+            'getOneUser'
         ]),
         user(){
             return this.$store.state.user.name;        
@@ -49,9 +53,11 @@ export default {
         
     },
         methods :{
-            ...mapActions([
-                'read'
-            ]),
+            getUser(){
+                this.$store.dispatch('getUser');
+            },
+
+
         logout(){
               this.$swal({
                 title: 'Are you sure?',
@@ -71,58 +77,33 @@ export default {
             });
         },
         unread(departs){ 
-            
-            if(this.getDepartment != ""){
-                for(let dep of this.getDepartment){
-                    for(let read of this.getUserRead){
-                        if(!read){
-                            if(departs === dep.depart && dep.userId != this.getUserId){   
-
-                                return true;
-                                
-                            }
-                        }
-                    }                  
-
-
+            for(let dep of this.getDepartment){
+                console.log(dep.postId);
+                if(departs === dep.depart && dep.userId != this.getUserId ){  
+                for(let id of this.getOneUser.read){
+                    if(!this.getOneUser.read.includes(dep.postId)){
+                        return true;
+                    }   
+                    }
                 }
+
             }
-    },
- /*        reads(depart){
+        },
 
-            const readArticles = this.getArticlesByDepartment(`${depart}`);
-            for(let article of readArticles){
-                        // Get the existing data
-            var existing = JSON.parse(localStorage.getItem('read'));
 
-            // If no existing data, create an array
-            // Otherwise, convert the localStorage string to an array
-            existing = existing ? existing : [];
 
-            // Add new data to localStorage Array
-            existing.push(article._id);
 
-            // Save back to localStorage
-            localStorage.setItem('read', JSON.stringify(existing));
-
-            let read = document.getElementById(`${depart}`);
-            read.classList.add('fas', 'fa-circle', 'p-2', 'unread-icon', 'd-none');
-            }
-            
-
-                } */
 
         async readPosts(depart){
             try{
-                    let read = document.getElementById(`${depart}`);
-                    read.classList.add('fas', 'fa-circle', 'p-2', 'unread-icon', 'd-none');
+                    let reads = document.getElementById(`${depart}`);
+                    reads.classList.add('d-none');
                 for(let article of this.getArticlesByDepartment(`${depart}`)){
-                    console.log(article);
-                    
-                    await this.$store.dispatch('readPost', {
+
+                    const post = await this.$store.dispatch('readPost', {
                         read : article._id
                     });
-
+                    
                 }
             }catch(error){
                 console.log(error);

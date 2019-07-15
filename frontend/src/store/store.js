@@ -8,13 +8,14 @@ export const store = new Vuex.Store({
     strict: true,
     state: {
         token : localStorage.getItem('token') || null,
-        user : JSON.parse(localStorage.getItem('user')) || '',
+        user : JSON.parse(localStorage.getItem('user')) || null,
         departments : [
             "Marketing",
             "HR",
             "Development",
             "UI-UX"
         ],
+        oneUser : {},
         articles : [],
         department :  [],
         readPost : [],
@@ -39,6 +40,9 @@ export const store = new Vuex.Store({
         },
         getUserRead : state => {
             return state.user.read;
+        },
+        getOneUser: state => {
+            return state.oneUser;
         },
         getDepartments: state => {
             return state.departments;
@@ -69,7 +73,8 @@ export const store = new Vuex.Store({
         },
         getReadPosts : state => {
             return state.readPost;
-        }
+        },
+        
     },
     
     mutations:{
@@ -82,6 +87,9 @@ export const store = new Vuex.Store({
             state.user = "";
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+        },
+        setOneUser(state, oneUser){
+            state.oneUser = oneUser;
         },
         setUser(state, user){
             state.user = user;
@@ -98,7 +106,7 @@ export const store = new Vuex.Store({
         setDepartment(state, department){
 
             department.forEach(dep => {
-                state.department.push({depart : dep.department, userId : dep.userId, postId : dep._id, read : false});
+                state.department.push({depart : dep.department, userId : dep.userId, postId : dep._id});
             });
         },
         setPosts(state, posts){
@@ -156,6 +164,17 @@ export const store = new Vuex.Store({
             }  
         },
 
+        async getUser({commit}){
+            try {
+                const response = await Axios.get("http://localhost:3000/api/auth/user/" + this.getters.getUserId);
+                const data = await response.data;
+                commit('setOneUser', data);
+            } catch (error) {
+                console.log(error);
+                
+            }
+        },
+
         async deleteAccount({commit}){ 
             Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;           
             try {
@@ -177,22 +196,22 @@ export const store = new Vuex.Store({
             formData.append('file', datas.file);
             try {
                 await Axios.post('http://localhost:3000/api/articles', formData);
-                var object = {};
+/*                 var object = {};
                 formData.forEach(function(value, key){
                     object[key] = value;
                 });
-                var json = JSON.stringify(object);
+                var json = JSON.stringify(object); */
                 /* commit('setDepartment', json); */
-            } catch (error) {
-                console.log(error);
-            }
+            }catch(error){
+                    
+                throw error;                 
+            }  
         },
         async getArticles({commit}){            
             Axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.state.token;
             try{
                 const response = await Axios.get('http://localhost:3000/api/articles');
                 const articles = await response.data;
-                
                 commit('setArticles', articles);
                 commit('setDepartment', articles);
                 commit('setPosts', articles);
@@ -204,12 +223,12 @@ export const store = new Vuex.Store({
             commit('setRead');
 
         }, */
-        async readPost ({commit}, data){
+        async readPost ({commit}, datas){
             try{
                 const response = await Axios.post(`http://localhost:3000/api/auth/user/` + this.state.user._id + '/read' , {
-                    read : data
+                    read : datas
                 });
-                const readPost = await response.data;
+                const readPost = await response.data.user.read;
                 console.log(readPost);
                 
                 commit('setReadPosts', readPost);

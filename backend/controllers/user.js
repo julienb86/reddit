@@ -17,30 +17,31 @@ exports.getOneUser = (req, res, next) => {
 }
 
 exports.modifyReadPost = (req, res, next)=>{
-    User.findOne({_id : req.params.id}).then(
+    User.findOne({_id : req.params.id})
+    .then(
         (user) => {
-            if(!user.read.includes(req.body._id)){
-                user.read.push(req.body._id);
+            console.log(req.body.read.read.toString());
+                if(!user.read.includes(req.body.read.read.toString())){
+                    user.read.push(req.body.read.read.toString());
+                }
                 user.save().then(
                     () => {
                         res.status(201).json({
-                            message : "Id added"
-                        })
+                            message : "Post successfully read",
+                            user
+                        });
                     }
                 ).catch(
                     (error) => {
-                        error
+                        res.status(400).json({
+                            error : error
+                        });
                     }
-                )
-            }else{
-                res.status(401).json({
-                    error : error
-                });
-            }
+                );
         }
-    )
+    );
     
-}
+};
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -51,7 +52,8 @@ exports.signup = (req, res, next) => {
                     email : req.body.email,
                     birthday : req.body.birthday,
                     department : req.body.department,
-                    password : hash
+                    password : hash,
+                    read: []
                 });
             user.save().then(
                 () => {
