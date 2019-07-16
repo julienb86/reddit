@@ -7,7 +7,7 @@
                     <div class="col-md-4">
                         <input id="file" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" hidden/>
                         <button type="button" id="custom-btn" class="btn col-md-6 form-control-file" @click="$refs.file.click()">Choose a file</button>
-                        <span>No file Chosen</span>
+                        <span>{{ $refs.file ? $refs.file.value : "No file chosen"}}</span>
                     </div>
 
                     <div class="mb-2 col-md-3" >
@@ -17,10 +17,11 @@
                 </div>
                 
             </div>
-        </form>
         <div>
             <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
-        </div>
+        </div>           
+        </form>
+
         
         <h2 class="text-center my-5">Development Department</h2>
 

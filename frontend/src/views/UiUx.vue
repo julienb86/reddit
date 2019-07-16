@@ -19,6 +19,9 @@
                 </div>
                 
             </div>
+            <div>
+                <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
+            </div>
         </form>
         
         <h2 class="text-center">UI-UX Department</h2>
