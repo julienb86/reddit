@@ -1,22 +1,16 @@
 <template>
-
-        <div class="col-md-2 col-12 left" id="navbarSupportedContent">
+    <div class="col-md-2 col-12 left" id="navbarSupportedContent">
 <!--             <div class="text-center p-10">
-                <img class="groupomania-icon" src="../assets/main-screen-icon.png" alt="navigation-icon" height="75px" width="75px">
-            </div>
- -->
-
-            <router-link to="Profile" class="nav-link d-block d-md-none float-right">{{ user }}</router-link>
-
-            <ul class="col-12">
-                <li v-for="depart of getDepartments" :key="depart.id" @click="readPosts(depart)">
-                    <i :id="depart" :class="{'fas fa-circle p-2 unread-icon' : unread(depart)} "></i>
-                    <!-- <i v-else class="far fa-circle p-2 icon"></i>  -->                   
-                    <router-link class="links" :to="`${depart}`">{{ depart }}</router-link>
-<!--                     <br><span v-if="getUnReadPosts && depart === getDepartment">You have {{ getUnReadPosts }} notification</span>
- -->            </li>
-            </ul>
+            <img class="groupomania-icon" src="../assets/main-screen-icon.png" alt="navigation-icon" height="75px" width="75px">
         </div>
+-->
+        <ul class="col-12">
+            <li class="list-item" v-for="depart of getDepartments" :key="depart.id" @click="readPosts(depart)">
+                <i :id="depart" :class="{'fas fa-circle p-2 unread-icon' : unread(depart)} "></i>                  
+                <router-link class="links" :to="`${depart}`">{{ depart }}</router-link>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
@@ -25,13 +19,8 @@ import Axios from 'axios';
 
 export default {
     mounted(){
-        console.log("mounted");
-        /* get the length of the articles */
-        console.log(this.getUser());
         this.getDepartment;
         this.getUser();
-/*         console.log(this.getUserRead.forEach(read => console.log(read)
-        )); */
         this.getUserRead;
         
     },
@@ -52,12 +41,10 @@ export default {
         },
         
     },
-        methods :{
-            getUser(){
-                this.$store.dispatch('getUser');
-            },
-
-
+    methods :{
+        getUser(){
+            this.$store.dispatch('getUser');
+        },
         logout(){
               this.$swal({
                 title: 'Are you sure?',
@@ -78,32 +65,24 @@ export default {
         },
         unread(departs){ 
             for(let dep of this.getDepartment){
-                console.log(dep.postId);
                 if(departs === dep.depart && dep.userId != this.getUserId ){  
-                for(let id of this.getOneUser.read){
-                    if(!this.getOneUser.read.includes(dep.postId)){
-                        return true;
-                    }   
+                    for(let id of this.getOneUser.read){
+                        if(!this.getOneUser.read.includes(dep.postId)){
+                            return true;
+                        }   
                     }
                 }
-
             }
         },
 
-
-
-
-
         async readPosts(depart){
             try{
-                    let reads = document.getElementById(`${depart}`);
-                    reads.classList.add('d-none');
+                let reads = document.getElementById(`${depart}`);
+                reads.classList.add('d-none');
                 for(let article of this.getArticlesByDepartment(`${depart}`)){
-
                     const post = await this.$store.dispatch('readPost', {
                         read : article._id
                     });
-                    
                 }
             }catch(error){
                 console.log(error);
@@ -128,6 +107,10 @@ export default {
     position: sticky;
     top: 0;
 }
+.list-item{
+    padding: 10px;
+    font-size: 1.2em;
+}
 .links{
     text-decoration: none;
 }
@@ -145,7 +128,7 @@ export default {
   color: antiquewhite;
 }
 .nav-link{
-    color: antiquewhite;
+    color: #112240;
     font-size: 1.2em;
 }
 </style>

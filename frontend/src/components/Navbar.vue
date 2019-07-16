@@ -1,24 +1,24 @@
 <template>
-  <nav class="col-12 navbar navbar-expand-lg">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="col-12 p-30 navbar navbar-expand-lg">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
     </button>
  
     <img src="../assets/navigation-icon.png" alt="navigation-icon" height="75px" width="75px" class="d-none d-sm-block">
 
-    <ul class="navbar-nav ml-auto d-block d-sm-none">
-        <li class="nav-item">
-          <a @click="logout()" class="nav-link" href="#">Log out</a>
-        </li>
-      </ul>
+    <div class="navbar-nav d-block d-sm-none">
+          <router-link class="link" to="Profile">{{ user }}</router-link>
+
+          <a @click="logout()" class="link mr-0" href="#">Log out</a>
+    </div>
 
     <div class="collapse navbar-collapse" >
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <router-link class="nav-link" to="Profile">Hey {{ user }}</router-link>
+          <router-link class="nav-link" to="Profile">{{ user }}</router-link>
         </li>
         <li class="nav-item">
-          <a @click="logout()" class="nav-link" href="#">Logout</a>
+          <a @click="logout()" class="nav-link" href="#">Log out</a>
         </li>
       </ul>
     </div>
@@ -72,7 +72,12 @@ export default {
 }
 .nav-link{
     color: antiquewhite;
-    font-size: 1.2em;
+    font-size: 1.3rem;
+}
+.link{
+  color: antiquewhite;
+  text-decoration: none;
+  margin: 0 30px;
 }
 
 

@@ -23,12 +23,12 @@
 <script>
 import Navbar from '../components/Navbar'
 import Departments from '../components/Departments'
-import {mapGetters, mapState} from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 export default {
 
     mounted(){
-        this.$store.dispatch('getArticles');   
-           
+        this.$store.dispatch('getArticles'); 
+        
     },
     components:{
         Navbar,

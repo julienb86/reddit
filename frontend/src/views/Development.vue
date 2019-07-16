@@ -1,31 +1,32 @@
 <template>
-
-
     <div class="col-md-10 col-xm-8">
-        <form @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
-            <div class="form-group p-5">
-                <textarea v-model="content" class="form-control" rows="3"></textarea>
-                    
-
-                <div class="row p-2 d-flex">
-                    <input id="file" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file col-md-2" hidden/>
-                    <div>
-                        <button type="button" id="custom-btn" class="btn border" @click="$refs.file.click()">CHOOSE A FILE</button>
-                        <span>No file Choosen</span>
+        <form class="my-5" @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                    <textarea v-model="content" class="form-control my-4" rows="3"></textarea>
+                <div class="form-row justify-content-md-between">
+                    <div class="col-md-4">
+                        <input id="file" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" hidden/>
+                        <button type="button" id="custom-btn" class="btn col-md-6 form-control-file" @click="$refs.file.click()">Choose a file</button>
+                        <span>No file Chosen</span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary mb-2 col-md-2">Submit</button> 
-                    <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
-              </div>
+                    <div class="mb-2 col-md-3" >
+                        <button type="submit" class="btn form-control">Submit</button> 
+                    </div>
+
+                </div>
                 
             </div>
         </form>
+        <div>
+            <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
+        </div>
         
-        <h2 class="text-center">Development Department</h2>
+        <h2 class="text-center my-5">Development Department</h2>
 
 
         <div class="row">
-            <div class="col-md-10 col-xm-8" v-for="article in allArticles" :key="article.id">
+            <div class="col-md-12 col-xm-8" v-for="article in allArticles" :key="article.id">
                
                 <Article :article= "article" />
 
@@ -57,7 +58,7 @@ export default {
         ...mapGetters([
             'getArticlesByDepartment',
         ]),
-        allArticles(){
+        allArticles(depart){
             return this.getArticlesByDepartment("Development");
         },
         ...mapState([
@@ -73,10 +74,6 @@ export default {
                 if(this.file){
                 
                     if(this.file.size < this.fileSize){
-                        console.log(this.file.size);
-                        console.log(this.fileSize);
-                        
-                        
                         const response = await this.$store.dispatch('postArticle', {
                         userId : this.$store.state.user._id,
                         name : this.$store.state.user.name,
@@ -104,7 +101,7 @@ export default {
             }else{
                 this.errors.add({
                 field : 'size_field',
-                msg : 'A text or an image is required'
+                msg : 'text or image is required'
             })
             }
             } catch (error) {
@@ -116,16 +113,13 @@ export default {
 </script>
 
 <style scoped>
-#custom-btn {
-    padding: 5px;
-    margin-right: 10px;
-    border: 1px solid black !important;
+.btn{
+    color: antiquewhite;
+    background-color: #112240;
 }
-.custom-button:hover{
-    background-color: white;
-    padding: 5px;
-    border: 1px solid !important;
-    border-radius: 5px;
+.btn:hover{
+    color: antiquewhite;
+    background-color: #112240;
 }
 
 </style>

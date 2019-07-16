@@ -2,21 +2,21 @@
 
 
     <div class="col-md-10 col-xm-8">
-        <form @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
-            <div class="form-group p-5">
-                <textarea v-model="content" class="form-control" rows="3"></textarea>
-                    
-
-                <div class="row p-2 d-flex">
-                    <input id="file" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" hidden/>
-                    <div class=" col-md-4">
-                        <button type="button" id="custom-btn" class="btn border" @click="$refs.file.click()">CHOOSE A FILE</button>
-                        <span >No file Choosen</span>
+        <form class="my-5" @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
+            <div class="form-group">
+                    <textarea v-model="content" class="form-control my-4" rows="3"></textarea>
+                <div class="form-row justify-content-md-between">
+                    <div class="col-md-4">
+                        <input id="file" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" hidden/>
+                        <button type="button" id="custom-btn" class="btn col-md-6 form-control-file" @click="$refs.file.click()">Choose a file</button>
+                        <span>No file Chosen</span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary mb-2 offset-md-6 col-md-2">SUBMIT</button> 
-                    <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
-              </div>
+                    <div class="mb-2 col-md-3" >
+                        <button type="submit" class="btn form-control">Submit</button> 
+                    </div>
+
+                </div>
                 
             </div>
         </form>
@@ -25,9 +25,8 @@
 
 
         <div class="row">
-            
-            <div class="col-md-10 col-xm-8" v-for="article in allArticles" :key="article.id">
-              
+            <div class="col-md-12 col-xm-8" v-for="article in allArticles" :key="article.id">
+               
                 <Article :article= "article" />
 
             </div>
@@ -40,6 +39,9 @@ import Article from "../components/Article";
 import { mapState } from 'vuex';
 import { mapGetters, mapActions } from 'vuex';
 export default {
+    mounted(){
+        console.log(this.$store.dispatch('getArticles'));
+    },
     components : {
         Article
     },
@@ -111,15 +113,12 @@ export default {
 </script>
 
 <style scoped>
-#custom-btn {
-    padding: 5px;
-    margin-right: 10px;
-    border: 1px solid black !important;
+.btn{
+    color: antiquewhite;
+    background-color: #112240;
 }
-.custom-button:hover{
-    background-color: white;
-    padding: 5px;
-    border: 1px solid !important;
-    border-radius: 5px;
+.btn:hover{
+    color: antiquewhite;
+    background-color: #112240;
 }
 </style>

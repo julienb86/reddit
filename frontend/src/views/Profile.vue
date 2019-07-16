@@ -1,5 +1,5 @@
 <template>
-<div class="row col-4 offset-3 mx-auto">
+<div class="row col-md-4 offset-md-3 mx-auto">
         <div>  
             <form class="form" @submit.prevent="registerProfile()">
                 <div class="d-flex my-5 justify-content-around">
