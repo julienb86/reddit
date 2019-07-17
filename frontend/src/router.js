@@ -14,6 +14,9 @@ Vue.use(Router)
 
 const router = new Router({
     mode: 'history',
+    scrollBehavior(to, from, savedPostion){
+      return{x: 0, y :0}
+    },
 
     routes :  [
         {

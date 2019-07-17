@@ -26,7 +26,7 @@
         <h2 class="text-center">Marketing Department</h2>
 
 
-        <div class="row">
+        <div id="#Marketing" class="row">
             <div class="col-md-12 col-xm-8" v-for="article in allArticles" :key="article.id">
                
                 <Article :article= "article" />
