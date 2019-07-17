@@ -5,9 +5,9 @@ const articlesCtrl = require('../controllers/articles');
 const multer = require('../middleware/multer-config');
 
 /* add auth below */
-router.get('/',articlesCtrl.getAllArticles);
-router.post('/',multer, articlesCtrl.createArticles);
-router.get('/:id',articlesCtrl.getOneArticle);
-router.put('/:id',articlesCtrl.modifyReadPost);
+router.get('/',auth, articlesCtrl.getAllArticles);
+router.post('/',auth, multer, articlesCtrl.createArticles);
+router.get('/:id',auth, articlesCtrl.getOneArticle);
+router.put('/:id',auth, articlesCtrl.modifyReadPost);
 
 module.exports = router;

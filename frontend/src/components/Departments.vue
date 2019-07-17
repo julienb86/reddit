@@ -1,10 +1,11 @@
 <template>
-    <div class="col-md-2 col-12 left" id="navbarSupportedContent">
+    <div class="col-md-2 col-12 left content-department" id="navbarSupportedContent">
 <!--             <div class="text-center p-10">
             <img class="groupomania-icon" src="../assets/main-screen-icon.png" alt="navigation-icon" height="75px" width="75px">
         </div>
 -->
-        <ul class="col-12">
+    <h2 class="mt-5 font-weight-bold d-none d-xl-block">Departments</h2>
+        <ul class="col-12 navbar-nav ml-auto "> 
             <li class="list-item" v-for="depart of getDepartments" :key="depart.id" @click="readPosts(depart)">
                 <i :id="depart" :class="{'fas fa-circle p-2 unread-icon' : unread(depart)} "></i>                  
                 <router-link class="links" :to="`${depart}`">{{ depart }}</router-link>
@@ -109,10 +110,12 @@ export default {
 }
 .list-item{
     padding: 10px;
-    font-size: 1.2em;
+    font-size: 1.1em;
+
 }
 .links{
     text-decoration: none;
+    color: #112240;
 }
 .icon{
     color:#EAE8E6;
@@ -129,6 +132,11 @@ export default {
 }
 .nav-link{
     color: #112240;
-    font-size: 1.2em;
 }
+@media (min-width: 992px) {
+    .content-department{
+    min-height: 100vh;
+    }
+}
+
 </style>

@@ -1,12 +1,12 @@
 <template>
-  <nav class="col-12 p-30 navbar navbar-expand-lg">
+  <nav class="col-12 p-30 navbar navbar-expand-md">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
     </button>
  
-    <img src="../assets/navigation-icon.png" alt="navigation-icon" height="75px" width="75px" class="d-none d-sm-block">
+    <img src="../assets/navigation-icon.png" alt="navigation-icon" height="75px" width="75px" class="d-none d-md-block">
 
-    <div class="navbar-nav d-block d-sm-none">
+    <div class="navbar-nav d-block d-md-none">
           <router-link class="link" to="Profile">{{ user }}</router-link>
 
           <a @click="logout()" class="link mr-0" href="#">Log out</a>

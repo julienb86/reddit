@@ -1,27 +1,26 @@
 <template>
-
-
     <div class="col-md-10 col-xm-8">
         <form class="my-5" @submit.prevent="postArticle()" enctype="multipart/form-data" method="post">
             <div class="form-group">
                     <textarea v-model="content" class="form-control my-4" rows="3"></textarea>
-                <div class="form-row justify-content-md-between">
-                    <div class="col-md-4">
-                        <input id="file" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" hidden/>
-                        <button type="button" id="custom-btn" class="btn col-md-6 form-control-file" @click="$refs.file.click()">Choose a file</button>
-                        <span>No file Chosen</span>
+                <div class="form-row justify-content-md-between my-5">
+                    <div class="col-md-6">
+                        <input id="fileId" v-validate="'size:5120'" name="attachment[], size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" @change="onFileChange"  hidden/>
+                        <button type="button"  class="btn btn-choose col-md-5 form-control-file" @click="$refs.file.click()">Choose a file</button>
+
+                        <span class="offset-md-1" >{{ fileName ? fileName : "No file Chosen"}}</span>
                     </div>
 
-                    <div class="mb-2 col-md-3" >
-                        <button type="submit" class="btn form-control">Submit</button> 
+                    <div class="mb-2 col-md-2" >
+                        <button type="submit" class="btn btn-submit form-control">Submit</button> 
                     </div>
 
                 </div>
                 
             </div>
-                <div>
-                    <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
-                </div>
+            <div>
+                <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
+            </div>           
         </form>
         
         <h2 class="text-center">Marketing Department</h2>
@@ -42,14 +41,12 @@ import Article from "../components/Article";
 import { mapState } from 'vuex';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-    mounted(){
-        console.log(this.$store.dispatch('getArticles'));
-    },
     components : {
         Article
     },
     data(){
         return{
+            fileName : "",
             content : '',
             file : null,
             fileSize : 5*1024*1024
@@ -75,10 +72,6 @@ export default {
                 if(this.file){
                 
                     if(this.file.size < this.fileSize){
-                        console.log(this.file.size);
-                        console.log(this.fileSize);
-                        
-                        
                         const response = await this.$store.dispatch('postArticle', {
                         userId : this.$store.state.user._id,
                         name : this.$store.state.user.name,
@@ -89,7 +82,7 @@ export default {
                 
             this.$store.dispatch('getArticles'); 
             this.content = '';
-            this.$refs.file.value = ''; 
+            this.fileName = '';  
                 }
             }else if(this.content){
                 const response = await this.$store.dispatch('postArticle', {
@@ -100,7 +93,6 @@ export default {
                 });
             this.$store.dispatch('getArticles'); 
             this.content = '';
-            this.$refs.file.value = ''; 
             }else{
                 this.errors.add({
                 field : 'size_field',
@@ -111,17 +103,30 @@ export default {
                 console.log(error);
             }
         },
+        onFileChange(event){
+            var fileData =  event.target.files[0];
+            this.fileName = fileData.name;
+        }
     }
 }
 </script>
 
 <style scoped>
-.btn{
-    color: antiquewhite;
-    background-color: #112240;
+.btn-choose{
+    background-color: #DEDEDE;
+    border: 1px solid black;
+    font-size: 1.1rem;
+    padding: 10px;
 }
-.btn:hover{
+
+.btn-submit{
     color: antiquewhite;
     background-color: #112240;
+    font-size: 1.2rem;
+}
+.btn-submit:hover{
+    color: antiquewhite;
+    background-color: #112240;
+    font-size: 1.2rem;
 }
 </style>
