@@ -8,6 +8,42 @@ run **npm run serve**
 
 **
 
+
+## Context:
+
+You have been a developer for over a year at **CONNECT-E**, a small agency of about a dozen employees, including three project managers, four developers, a graphic designer, two salespeople, a marketing strategist, and the director, who started the agency eight years ago.
+
+Your director, Stephanie, invites the entire agency for a drink to celebrate some good news! She has just signed a contract for a new ambitious project! 🥂
+
+The client in question is **Groupomania**, a large group and one of the most loyal clients of the agency.
+
+
+##The Project:
+
+[![Groupomania's logo](https://user.oc-static.com/upload/2018/11/30/15435845574363_Groupomania.png)](https://user.oc-static.com/upload/2018/11/30/15435845574363_Groupomania.png)
+
+Groupomania's logo
+
+The project will be to build an **internal social network** for Groupomania's employees. The goal of this tool is to facilitate more interaction between colleagues. Groupomania's HR department imagined three apps to promote exchanges between colleagues but otherwise allows for a lot of flexibility regarding the functionalities of the network.
+
+
+_Reddit_ - they want employees to write and/or share articles with colleagues on topics of interest to them.
+
+
+### Teamwork
+
+For this project I had to team up with Christopher Kim, an american product manager.
+-   The project manager or product manager:  
+    -   prepared a customer needs analysis and a minimum functional proposal for one of the apps;
+    -   defined the features to be produced in a first sprint, to discuss and finalize with me;
+    -   proposed a methodology and tools to carry out the project;
+    -   wrote a user story for each selected feature;
+    -   found a person to test the application 
+-   **Me, as the developer:**  
+    -   **chose which app you will build;**
+    -   **estimated the time you spend on the development of each feature;**
+    -   **developed the first iteration of the application.**
+
 ## Screenshots of the application
 
 **
