@@ -18,7 +18,7 @@ Your director, Stephanie, invites the entire agency for a drink to celebrate som
 The client in question is **Groupomania**, a large group and one of the most loyal clients of the agency.
 
 
-##The Project:
+## The Project:
 
 [![Groupomania's logo](https://user.oc-static.com/upload/2018/11/30/15435845574363_Groupomania.png)](https://user.oc-static.com/upload/2018/11/30/15435845574363_Groupomania.png)
 
