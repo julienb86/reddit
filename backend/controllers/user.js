@@ -20,7 +20,6 @@ exports.modifyReadPost = (req, res, next)=>{
     User.findOne({_id : req.params.id})
     .then(
         (user) => {
-            console.log(req.body.read.read.toString());
                 if(!user.read.includes(req.body.read.read.toString())){
                     user.read.push(req.body.read.read.toString());
                 }

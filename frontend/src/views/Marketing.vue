@@ -41,6 +41,9 @@ import Article from "../components/Article";
 import { mapState } from 'vuex';
 import { mapGetters, mapActions } from 'vuex';
 export default {
+    mounted(){
+        console.log(this.getArticlesByDepartment)
+    },
     components : {
         Article
     },

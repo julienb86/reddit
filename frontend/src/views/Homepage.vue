@@ -25,6 +25,12 @@ import Navbar from '../components/Navbar'
 import Departments from '../components/Departments'
 import {mapGetters, mapState, mapActions} from 'vuex'
 export default {
+        beforeRouteEnter(to, from, next){
+        if(!localStorage.getItem("user")){
+           return next({path: '/'});
+        }
+        next();
+    },
 
     mounted(){
         this.$store.dispatch('getArticles'); 

@@ -33,10 +33,6 @@ const router = new Router({
               component: Profile
             },
             {
-/*                 path: 'articles',
-                component : Articles,
-                children : [
-                    { */
                         path: 'marketing',
                         name : 'marketing',
                         component: Marketing
@@ -56,8 +52,6 @@ const router = new Router({
                         name : 'UiUx',
                         component: UiUx
                       },
-/*                 ]
-            }, */
 
             
         ]
