@@ -13,6 +13,7 @@ import UiUx from './views/UiUx'
 Vue.use(Router)
 
 const router = new Router({
+
     mode: 'history',
     scrollBehavior(to, from, savedPostion){
       return{x: 0, y :0}
@@ -36,31 +37,41 @@ const router = new Router({
               component: Profile
             },
             {
-                        path: 'marketing',
-                        name : 'marketing',
-                        component: Marketing
-                      },
-                      {
-                        path: 'HR',
-                        name : 'HR',
-                        component: HR
-                      },
-                      {
-                        path: 'development',
-                        name : 'development',
-                        component: Development
-                      },
-                      {
-                        path: 'UI-UX',
-                        name : 'UiUx',
-                        component: UiUx
-                      },
+              path: 'marketing',
+              name : 'marketing',
+              component: Marketing
+            },
+            {
+              path: 'HR',
+              name : 'HR',
+              component: HR
+            },
+            {
+              path: 'development',
+              name : 'development',
+              component: Development
+            },
+            {
+              path: 'UI-UX',
+              name : 'UiUx',
+              component: UiUx
+            },
 
-            
+  
         ]
         }
 ]
 
+});
+
+router.beforeEach((to, from, next) => {
+  if(window.localStorage.getItem('user') !== null && (to.path == '/' || to.path == '/homepage')){
+      next('/homepage/profile');
+  }
+  if(window.localStorage.getItem('user') === null && to.path != '/'){
+      next('/');
+  } 
+  next();
 });
 
 export default router;
