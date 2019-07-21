@@ -5,8 +5,8 @@
                     <textarea v-model="content" class="form-control my-4" rows="3"></textarea>
                 <div class="form-row justify-content-md-between my-5">
                     <div class="col-md-6">
-                        <input id="fileId" v-validate="'size:5120'" name="attachment[], size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" @change="onFileChange"  hidden/>
-                        <button type="button"  class="btn btn-choose col-md-5 form-control-file" @click="$refs.file.click()">Choose a file</button>
+                        <input id="fileId" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" @change="onFileChange"  hidden/>
+                        <button type="button" class="btn btn-choose col-md-5 form-control-file" @click="$refs.file.click()">Choose a file</button>
 
                         <span class="offset-md-1" >{{ fileName ? fileName : "No file Chosen"}}</span>
                     </div>
@@ -41,9 +41,6 @@ import Article from "../components/Article";
 import { mapState } from 'vuex';
 import { mapGetters, mapActions } from 'vuex';
 export default {
-    mounted(){
-        console.log(this.getArticlesByDepartment)
-    },
     components : {
         Article
     },
@@ -73,7 +70,6 @@ export default {
             try {
                 this.file = this.$refs.file.files[0];
                 if(this.file){
-                
                     if(this.file.size < this.fileSize){
                         const response = await this.$store.dispatch('postArticle', {
                         userId : this.$store.state.user._id,
@@ -81,12 +77,16 @@ export default {
                         department : this.$store.state.departments[0],
                         content : this.content,
                         file : this.file,
-                        });
+                    });
                 
-            this.$store.dispatch('getArticles'); 
+            this.$store.dispatch('getArticles');
             this.content = '';
-            this.fileName = '';  
-                }
+            this.fileName = ''; 
+                }else{
+
+            this.fileName = '';
+            this.content = '';
+            }
             }else if(this.content){
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
@@ -99,16 +99,20 @@ export default {
             }else{
                 this.errors.add({
                 field : 'size_field',
-                msg : 'A text or an image is required'
-            });
-            }
+                msg : 'Text or an image is required'
+                });
+                this.fileName = '';
+                this.content = '';
+                }
             } catch (error) {
+                this.fileName = '';
+                this.file = null;
+                this.content = '';
                 console.log(error);
-            }
-        },
+                }
+            },
         onFileChange(event){
-            var fileData =  event.target.files[0];
-            this.fileName = fileData.name;
+            this.fileName = this.$refs.file.files[0].name; 
         }
     }
 }

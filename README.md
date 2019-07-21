@@ -1,7 +1,7 @@
 ## Installation
 
 **Clone the repo.** Node : v8.10.0 cd backend 
-run **node serve.js**
+run **node server**
 
 Vue : 3.7.0 cd frontend 
 run **npm run serve**

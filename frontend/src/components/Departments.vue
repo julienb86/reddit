@@ -1,14 +1,10 @@
 <template>
-    <div class="col-md-2 col-12 left content-department" id="navbarSupportedContent">
-<!--             <div class="text-center p-10">
-            <img class="groupomania-icon" src="../assets/main-screen-icon.png" alt="navigation-icon" height="75px" width="75px">
-        </div>
--->
-    <h2 class="mt-5 font-weight-bold d-none d-xl-block">Departments</h2>
-        <ul class="col-12 navbar-nav ml-auto "> 
+    <div class="left" id="navbarSupportedContent">
+        <h2 class="mt-5 font-weight-bold d-none d-xl-block">Departments</h2>
+        <ul class="navbar-nav"> 
             <li class="list-item" v-for="depart of getDepartments" :key="depart.id" @click="readPosts(depart)">
-                <i :id="depart" :class="{'fas fa-circle p-2 unread-icon' : unread(depart)} "></i>                  
-                <router-link class="links" :to="`${depart}`">{{ depart }}</router-link>
+                <span :id="depart" :class="{'fas fa-circle unread-icon ' : unread(depart), 'fas fa-circle ': !unread(depart) }"></span>
+                <router-link class="links ml-2" :to="`${depart}`">{{ depart }}</router-link>
             </li>
         </ul>
     </div>
@@ -79,7 +75,7 @@ export default {
         async readPosts(depart){
             try{
                 let reads = document.getElementById(`${depart}`);
-                reads.classList.add('d-none');
+                reads.style.color = "#EAE8E6";
                 for(let article of this.getArticlesByDepartment(`${depart}`)){
                     const post = await this.$store.dispatch('readPost', {
                         read : article._id
@@ -100,6 +96,7 @@ export default {
 <style scoped>
 *{
     list-style: none;
+
 }
 .left{
     background-color:#EAE8E6;
@@ -109,7 +106,7 @@ export default {
     top: 0;
 }
 .list-item{
-    padding: 10px;
+    padding: 5px;
     font-size: 1.1em;
 
 }
@@ -117,8 +114,9 @@ export default {
     text-decoration: none;
     color: #112240;
 }
-.icon{
-    color:#EAE8E6;
+.fa-circle{
+    color: #EAE8E6;
+    font-size: 0.5rem;
 }
 .unread-icon{
     color: rgb(70, 140, 180);
@@ -134,8 +132,13 @@ export default {
     color: #112240;
 }
 @media (min-width: 992px) {
-    .content-department{
+    .left{
     min-height: 100vh;
+    }
+}
+@media (max-width : 768px){
+    .left{
+        width : 100%;
     }
 }
 
