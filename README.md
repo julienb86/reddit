@@ -40,8 +40,8 @@ For this project I had to team up with Christopher Kim, an american product mana
     -   wrote a user story for each selected feature;
     -   found a person to test the application 
 -   **Me, as the developer:**  
-    -   **chose which app you will build;**
-    -   **estimated the time you spend on the development of each feature;**
+    -   **chose which app I wanted to build;**
+    -   **estimated the time to spend on the development of each feature;**
     -   **developed the first iteration of the application.**
 
 ## Screenshots of the application
