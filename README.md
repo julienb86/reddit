@@ -16,7 +16,7 @@ You can then run the server with **node server**. The server should run on local
 
 ### Running the client
 
-From within the front folder, run **npm install**.
+From within the frontend folder, run **npm install**.
 
 You can then run the client with **npm run start**. The project should run on localhost with default port 8080.
 
