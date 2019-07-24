@@ -8,7 +8,7 @@
                 <div class="form-row justify-content-md-between my-5">
                     <div class="col-md-6">
                         <input id="fileId" v-validate="'size:5120'" name="size_field" data-vv-as="file" type="file" ref="file" class="form-control-file" @change="onFileChange"  hidden/>
-                        <button type="button"  class="btn btn-choose col-md-5 form-control-file" @click="$refs.file.click()">Choose a file</button>
+                        <button type="button" class="btn btn-choose col-md-5 form-control-file" @click="$refs.file.click()">Choose a file</button>
 
                         <span class="offset-md-1" >{{ fileName ? fileName : "No file Chosen"}}</span>
                     </div>
@@ -24,6 +24,7 @@
                 <span  v-show="errors.has('size_field')" class="text-danger submit">{{ errors.first('size_field')}}</span>
             </div>           
         </form>
+
         
         <h2 class="text-center">HR Department</h2>
 
@@ -76,7 +77,7 @@ export default {
                         const response = await this.$store.dispatch('postArticle', {
                         userId : this.$store.state.user._id,
                         name : this.$store.state.user.name,
-                        department : this.$store.state.departments[0],
+                        department : this.$store.state.departments[1],
                         content : this.content,
                         file : this.file,
                     });
@@ -93,7 +94,7 @@ export default {
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
                 name : this.$store.state.user.name,
-                department : this.$store.state.departments[0],
+                department : this.$store.state.departments[1],
                 content : this.content
                 });
             this.$store.dispatch('getArticles'); 

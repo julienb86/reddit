@@ -1,12 +1,24 @@
+## Groupomania Reddit
+
+A spinoff based on Reddit app, built with Vue.js / Node.js / MongoDB / Express.js
+
 ## Installation
 
-**Clone the repo.** Node : v8.10.0 cd backend 
-run **node server**
+**You need to have Node and npm installed on your machine.**
 
-Vue : 3.7.0 cd frontend 
-run **npm run serve**
+Clone this repo.
 
-**
+### Running the server.
+
+From within the backend folder, run **npm install**.
+
+You can then run the server with **node server**. The server should run on localhost with default port 3000. 
+
+### Running the client
+
+From within the front folder, run **npm install**.
+
+You can then run the client with **npm run start**. The project should run on localhost with default port 8080.
 
 
 ## Context:

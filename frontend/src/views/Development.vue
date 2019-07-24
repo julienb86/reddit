@@ -74,7 +74,7 @@ export default {
                         const response = await this.$store.dispatch('postArticle', {
                         userId : this.$store.state.user._id,
                         name : this.$store.state.user.name,
-                        department : this.$store.state.departments[0],
+                        department : this.$store.state.departments[2],
                         content : this.content,
                         file : this.file,
                     });
@@ -91,7 +91,7 @@ export default {
                 const response = await this.$store.dispatch('postArticle', {
                 userId : this.$store.state.user._id,
                 name : this.$store.state.user.name,
-                department : this.$store.state.departments[0],
+                department : this.$store.state.departments[2],
                 content : this.content
                 });
             this.$store.dispatch('getArticles'); 
